@@ -1,0 +1,132 @@
+@use '../../../shared/styles/abstracts' as media;
+
+.keywordRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 86px;
+  background: var(--surface);
+  padding: 18px 0;
+  border-bottom: 1px solid var(--divider);
+}
+
+.keywordName {
+  font-size: 25px;
+  line-height: 1.4;
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.dragHandle {
+  padding: 8px 2px;
+  background: none;
+  color: var(--drag-handle);
+  font-size: 22px;
+  flex-shrink: 0;
+  touch-action: none;
+}
+
+.dragHandle:hover {
+  color: var(--blue);
+}
+
+.translationInput {
+  width: 38%;
+  min-width: 0;
+  border: 1px solid var(--input-border);
+  background: var(--input-surface);
+  border-radius: 10px;
+  padding: 7px 14px;
+  color: var(--input-text);
+  text-align: center;
+  font-family: var(--font-translation);
+  font-size: 24px;
+  height: 48px;
+  transition: background 0.15s;
+}
+
+.translationInput:hover {
+  border-color: var(--input-border-hover);
+}
+
+.translationInput:focus {
+  background: var(--surface);
+  color: var(--text);
+}
+
+.isMissing .keywordName {
+  color: var(--missing-label);
+}
+
+.isMissing .translationInput {
+  background: var(--missing-surface);
+  border-color: var(--missing-surface);
+  color: var(--missing-text);
+}
+
+.isMissing .translationInput::placeholder {
+  color: var(--missing-text);
+  opacity: 1;
+}
+
+.isMissing .translationInput:focus {
+  background: var(--missing-focus);
+}
+
+.isDragging {
+  box-shadow: 0 10px 25px var(--shadow-drag);
+  border-radius: 10px;
+}
+
+@include media.up(tablet) {
+  .keywordRow {
+    min-height: 76px;
+    padding: 13px 0;
+    gap: 16px;
+  }
+
+  .keywordName {
+    font-size: 22px;
+  }
+
+  .translationInput {
+    width: 46%;
+    font-size: 22px;
+  }
+}
+
+@include media.down(mobile) {
+  .keywordRow {
+    min-height: 78px;
+    gap: 7px;
+    padding: 16px 0;
+  }
+
+  .keywordName {
+    font-size: 21px;
+  }
+
+  .dragHandle {
+    font-size: 18px;
+    width: 18px;
+  }
+
+  .translationInput {
+    height: 40px;
+    font-size: 21px;
+    width: 39%;
+    padding: 5px 8px;
+    border-radius: 7px;
+  }
+}
+
+@include media.down(below-tablet) {
+  .translationInput {
+    min-height: 44px;
+  }
+
+  .dragHandle {
+    min-height: 44px;
+  }
+}
