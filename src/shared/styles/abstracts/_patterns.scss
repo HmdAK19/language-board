@@ -1,0 +1,33 @@
+@mixin panel($padding: var(--space-4), $radius: var(--radius-panel)) {
+  min-width: 0;
+  padding: $padding;
+  border: var(--border-subtle);
+  border-radius: $radius;
+  background: var(--surface);
+}
+
+@mixin scrollable {
+  min-width: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
+  scrollbar-width: thin;
+}
+
+@mixin form-control {
+  width: 100%;
+  min-width: 0;
+  padding: var(--control-padding);
+  border: 1px solid var(--form-border);
+  border-radius: var(--radius-control);
+  background: var(--surface);
+  color: var(--text);
+}
+
+@mixin action-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}

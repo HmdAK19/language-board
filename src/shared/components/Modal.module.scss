@@ -1,0 +1,94 @@
+@use '../styles/abstracts' as ui;
+
+.modal {
+  --modal-spacing: clamp(10px, 2dvh, 16px);
+  --modal-edge: clamp(8px, 2dvh, 16px);
+  border: var(--border-subtle);
+  border-radius: 20px;
+  box-shadow: 0 25px 100px var(--shadow-modal);
+  width: min(520px, calc(100% - 32px));
+  max-width: calc(100vw - 32px);
+  margin: auto;
+  max-height: calc(100dvh - var(--modal-edge) * 2);
+  padding: 0;
+  color: var(--text);
+  background: var(--surface);
+  overflow: hidden;
+  flex-direction: column;
+
+  &[open] {
+    display: flex;
+  }
+}
+
+.modal::backdrop {
+  background: var(--overlay);
+  backdrop-filter: blur(3px);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex: 0 0 auto;
+  padding: var(--modal-spacing) var(--space-5);
+  background: var(--nav-link-surface);
+  border-bottom: var(--border-subtle);
+
+  h2 {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    font-size: 20px;
+    line-height: 1.4;
+    margin: 0;
+  }
+}
+
+.content {
+  @include ui.scrollable;
+
+  min-height: 0;
+  padding: var(--modal-spacing) var(--space-5);
+  overflow-wrap: anywhere;
+  scrollbar-gutter: stable;
+}
+
+.muted {
+  margin: 0 0 var(--modal-spacing);
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.closeButton {
+  flex: 0 0 44px;
+  display: grid;
+  place-items: center;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 28px;
+  width: 44px;
+  height: 44px;
+  border: var(--border-subtle);
+  border-radius: var(--radius-control);
+
+  &:hover {
+    color: var(--blue);
+    background: var(--nav-link-hover);
+  }
+}
+
+@include ui.down(mobile) {
+  .header {
+    padding: var(--modal-spacing) var(--space-4);
+  }
+
+  .content {
+    padding-inline: 16px;
+  }
+
+  .content {
+    padding-block: var(--modal-spacing);
+  }
+}

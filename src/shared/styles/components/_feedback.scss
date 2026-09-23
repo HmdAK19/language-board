@@ -1,0 +1,25 @@
+.warning-banner {
+  background: var(--warning-surface);
+  border: 1px solid var(--warning-border);
+  border-radius: var(--radius-control);
+  padding: 14px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 12px;
+  color: var(--muted);
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.error-text {
+  color: var(--error-text);
+  font-size: 13px;
+}
