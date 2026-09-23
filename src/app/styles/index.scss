@@ -1,0 +1,7 @@
+// Global foundations only. Feature styles are loaded by their owning components.
+@use '../../shared/styles/base/tokens';
+@use '../../shared/styles/base/reset';
+@use '../../shared/styles/components/page-heading';
+@use '../../shared/styles/components/buttons';
+@use '../../shared/styles/components/feedback';
+@use 'shell';
