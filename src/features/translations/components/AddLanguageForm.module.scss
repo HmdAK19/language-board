@@ -1,0 +1,76 @@
+@use '../../../shared/styles/abstracts' as ui;
+
+.form {
+  margin-top: var(--modal-spacing);
+  padding-top: var(--modal-spacing);
+  border-top: var(--border-subtle);
+
+  fieldset {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  legend {
+    margin: 0 0 var(--space-1);
+    font-size: 14px;
+    font-weight: 650;
+    color: var(--blue);
+  }
+
+  label {
+    display: block;
+    margin: var(--space-2) 0 var(--space-1);
+    font-size: 14px;
+    font-weight: 550;
+  }
+
+  input,
+  select {
+    @include ui.form-control;
+
+    min-height: 44px;
+    padding-block: var(--space-2);
+    border-color: var(--control-border);
+    background: var(--input-surface);
+    font-size: 16px;
+
+    &:hover {
+      border-color: var(--input-border-hover);
+    }
+
+    &:focus-visible {
+      border-color: var(--focus);
+      background: var(--surface);
+    }
+
+    &[aria-invalid='true'] {
+      border-color: var(--error-text);
+      background: var(--missing-focus);
+    }
+  }
+}
+
+.select {
+  background: var(--background);
+  color: inherit;
+}
+
+.errorText {
+  margin: 8px 0 0;
+  color: var(--error-text);
+}
+
+.actions {
+  @include ui.action-group;
+
+  margin-top: var(--modal-spacing);
+}
+
+@include ui.down(mobile) {
+  .actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

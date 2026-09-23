@@ -1,0 +1,66 @@
+@use '../../../shared/styles/abstracts' as media;
+
+.control {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  width: clamp(112px, 12vw, 160px);
+  color: var(--blue);
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset-inline-end: 17px;
+    top: 50%;
+    width: 7px;
+    height: 7px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: translateY(-70%) rotate(45deg);
+    pointer-events: none;
+  }
+}
+
+.languageSelect {
+  appearance: none;
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding-block: 9px;
+  padding-inline: 14px 38px;
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-control);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-translation);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  text-overflow: ellipsis;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease;
+
+  &:hover {
+    border-color: var(--blue);
+    background: var(--nav-link-surface);
+  }
+
+  &:focus-visible {
+    border-color: var(--focus);
+    outline: 2px solid var(--focus);
+    outline-offset: 3px;
+  }
+
+  option {
+    background: var(--surface);
+    color: var(--text);
+    font-weight: 400;
+  }
+}
+
+@include media.down(mobile) {
+  .control {
+    width: 112px;
+  }
+}
