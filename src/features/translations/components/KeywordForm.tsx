@@ -1,12 +1,9 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { Button, TextField } from '@/shared';
+import { Button, TextField, VirtualList } from '@/shared';
 
-import {
-  createKeywordFormSchema,
-  type KeywordFormValues,
-} from '../schemas';
+import { createKeywordFormSchema, type KeywordFormValues } from '../schemas';
 import type { Dataset, LanguageDefinition } from '../types';
 export type { KeywordFormValues } from '../schemas';
 import styles from './KeywordForm.module.scss';
@@ -31,6 +28,7 @@ export const KeywordForm = ({
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<KeywordFormValues>({
+    shouldUnregister: false,
     resolver: yupResolver(createKeywordFormSchema(validateKeyword, data)),
     defaultValues: {
       keyword: '',
@@ -64,17 +62,27 @@ export const KeywordForm = ({
       >
         <legend>Translations</legend>
 
-        {languages.map((item) => (
-          <TextField
-            key={item.code}
-            label={`Translation · ${item.label}`}
-            lang={item.code}
-            dir={item.direction}
-            maxLength={500}
-            {...register(`translations.${item.code}`)}
-            error={errors.translations?.message as string | undefined}
-          />
-        ))}
+        <VirtualList
+          className={styles.translationFields}
+          aria-label="Translation fields"
+          items={languages}
+          getKey={(item) => item.code}
+          estimateSize={90}
+          renderItem={(item) => (
+            <TextField
+              label={`Translation · ${item.label}`}
+              lang={item.code}
+              dir={item.direction}
+              maxLength={500}
+              {...register(`translations.${item.code}`)}
+              error={
+                typeof errors.translations?.message === 'string'
+                  ? errors.translations.message
+                  : undefined
+              }
+            />
+          )}
+        />
       </fieldset>
       <div className={styles.dialogActions}>
         <Button variant="secondary" onClick={onCancel}>

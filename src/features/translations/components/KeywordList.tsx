@@ -1,16 +1,24 @@
 import { DragDropContext, Droppable } from '@hello-pangea/dnd';
+import { useState } from 'react';
 
 import { useTranslations } from '../hooks';
-import { KeywordRow } from './KeywordRow';
+import { VirtualList } from '@/shared';
+import { KeywordRow, KeywordRowContent } from './KeywordRow';
 import styles from './KeywordList.module.scss';
 
 export const KeywordList = () => {
   const { data, language, dispatch } = useTranslations();
+  const direction = data.languages.find(
+    (item) => item.code === language,
+  )?.direction;
+  const [draggedId, setDraggedId] = useState<string | null>(null);
 
   return (
     <DragDropContext
+      onBeforeCapture={({ draggableId }) => setDraggedId(draggableId)}
       onDragEnd={({ source, destination }) => {
-        if (destination)
+        setDraggedId(null);
+        if (destination && destination.index !== source.index)
           dispatch({
             type: 'move',
             from: source.index,
@@ -18,38 +26,43 @@ export const KeywordList = () => {
           });
       }}
     >
-      <Droppable droppableId="keywords">
+      <Droppable
+        droppableId="keywords"
+        mode="virtual"
+        renderClone={(provided, snapshot, rubric) => (
+          <KeywordRowContent
+            item={data.keywords.byId[rubric.draggableId]}
+            language={language}
+            direction={direction}
+            provided={provided}
+            snapshot={snapshot}
+            onEdit={() => {}}
+          />
+        )}
+      >
         {(provided) => (
-          <ul
+          <VirtualList
             className={styles.list}
-            ref={provided.innerRef}
+            listRef={provided.innerRef}
             {...provided.droppableProps}
-          >
-            {data.keywords.order.map((id, index) => (
+            aria-label="Keywords"
+            retainedItemKey={draggedId}
+            items={data.keywords.order}
+            getKey={(id) => id}
+            estimateSize={86}
+            emptyState="No keywords yet. Add your first keyword below."
+            renderItem={(id, index) => (
               <KeywordRow
-                key={id}
                 item={data.keywords.byId[id]}
                 index={index}
                 language={language}
+                direction={direction}
                 onEdit={(value) =>
-                  dispatch({
-                    type: 'edit',
-                    id,
-                    language,
-                    value,
-                  })
+                  dispatch({ type: 'edit', id, language, value })
                 }
               />
-            ))}
-
-            {provided.placeholder}
-
-            {!data.keywords.order.length && (
-              <li className="empty-state">
-                No keywords yet. Add your first keyword below.
-              </li>
             )}
-          </ul>
+          />
         )}
       </Droppable>
     </DragDropContext>

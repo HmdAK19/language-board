@@ -75,3 +75,12 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+.translationFields {
+  position: relative;
+  max-height: 30dvh;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0 4px;
+  list-style: none;
+}

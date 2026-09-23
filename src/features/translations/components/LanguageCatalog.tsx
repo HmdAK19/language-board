@@ -1,4 +1,4 @@
-import { Button } from '@/shared';
+import { Button, VirtualList } from '@/shared';
 
 import type { LanguageDefinition } from '../types';
 import styles from './LanguageCatalog.module.scss';
@@ -22,9 +22,14 @@ export const LanguageCatalog = ({
           {languages.length}
         </span>
       </div>
-      <ol className={styles.catalog}>
-        {languages.map((language, index) => (
-          <li key={language.code}>
+      <VirtualList
+        className={styles.catalog}
+        aria-label="Available languages"
+        items={languages}
+        getKey={(language) => language.code}
+        estimateSize={64}
+        renderItem={(language, index) => (
+          <div className={styles.catalogRow}>
             <span className={styles.languageDetails}>
               <b dir="auto">{language.label}</b> <small>{language.code}</small>
             </span>
@@ -54,9 +59,9 @@ export const LanguageCatalog = ({
                 ×
               </Button>
             </div>
-          </li>
-        ))}
-      </ol>
+          </div>
+        )}
+      />
     </section>
   );
 };

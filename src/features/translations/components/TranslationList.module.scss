@@ -1,22 +1,30 @@
 @use '../../../shared/styles/abstracts' as media;
-
-.list {
-  display: grid;
-  gap: var(--space-4);
+.container {
+  --columns: 1;
+  --row-gap: var(--space-4);
+}
+.list,
+.grid {
   margin: 0;
   padding: 0;
   list-style: none;
 }
-
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
+  gap: var(--row-gap);
+}
+.row {
+  padding-bottom: var(--row-gap);
+}
 @include media.up(cards) {
-  .list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .container {
+    --columns: 2;
   }
 }
-
 @include media.up(desktop) {
-  .list {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--space-6);
+  .container {
+    --columns: 3;
+    --row-gap: var(--space-6);
   }
 }

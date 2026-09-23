@@ -36,7 +36,7 @@
   padding: 0 var(--space-1) 0 0;
   list-style: none;
 
-  li {
+  .catalogRow {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -93,7 +93,7 @@
 }
 
 @include ui.down(mobile) {
-  .catalog li {
+  .catalog .catalogRow {
     flex-wrap: wrap;
     gap: var(--space-3);
     padding: var(--space-1) var(--space-2);
