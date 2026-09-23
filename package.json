@@ -1,0 +1,48 @@
+{
+  "name": "language-board",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "lint": "eslint .",
+    "test": "vitest run src",
+    "test:e2e": "playwright test",
+    "format": "prettier --write src e2e docs *.ts *.js *.json *.html README.md",
+    "format:check": "prettier --check src e2e docs *.ts *.js *.json *.html README.md"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "A responsive translation workspace built with React Context.",
+  "dependencies": {
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/vazirmatn": "^5.3.0",
+    "@hello-pangea/dnd": "^18.0.1",
+    "@hookform/resolvers": "^5.9.1",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "react-hook-form": "^7.88.0",
+    "react-router-dom": "^7.18.4",
+    "yup": "^1.7.1"
+  },
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "@eslint/js": "^9.36.0",
+    "@playwright/test": "^1.62.1",
+    "@types/node": "^24.6.0",
+    "@types/react": "^19.1.16",
+    "@types/react-dom": "^19.1.9",
+    "@vitejs/plugin-react": "^5.0.4",
+    "eslint": "^9.36.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "globals": "^16.4.0",
+    "prettier": "^3.9.8",
+    "sass": "^1.105.0",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.45.0",
+    "vite": "^7.1.7",
+    "vitest": "^4.1.10"
+  }
+}
