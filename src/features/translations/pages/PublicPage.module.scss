@@ -1,0 +1,33 @@
+@use '../../../shared/styles/abstracts' as ui;
+
+.publicPage {
+  @include ui.panel(42px 46px, 20px);
+
+  border: 0;
+  box-shadow: 0 1px 5px var(--shadow-public);
+}
+
+@include ui.up(tablet) {
+  .publicPage {
+    padding: 32px;
+  }
+}
+
+@include ui.up(desktop) {
+  .publicPage {
+    padding: 40px;
+  }
+}
+
+@include ui.down(mobile) {
+  .publicPage {
+    padding: 27px var(--space-6);
+    border-radius: var(--radius-panel);
+  }
+}
+
+@include ui.down(compact) {
+  .publicPage {
+    padding: var(--space-6) 18px;
+  }
+}

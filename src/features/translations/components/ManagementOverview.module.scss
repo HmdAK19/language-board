@@ -1,0 +1,53 @@
+.overview {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin: calc(-1 * var(--space-1)) 0 var(--space-5);
+
+  div {
+    padding: var(--space-3) var(--space-4);
+    border: var(--border-subtle);
+    border-radius: 13px;
+    background: var(--surface);
+  }
+
+  dt,
+  dd {
+    display: block;
+  }
+
+  dt {
+    color: var(--muted);
+    font-size: 11px;
+  }
+
+  dd {
+    margin: var(--space-1) 0 0;
+    color: var(--blue);
+    font-size: 22px;
+  }
+
+  .needsAttention {
+    background: var(--missing-focus);
+    border-color: color-mix(in srgb, var(--missing-label) 20%, var(--surface));
+
+    dd {
+      color: var(--missing-label);
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .overview {
+    gap: 7px;
+    margin-bottom: var(--space-4);
+
+    div {
+      padding: 11px 10px;
+    }
+
+    dd {
+      font-size: 18px;
+    }
+  }
+}

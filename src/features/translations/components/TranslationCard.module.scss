@@ -1,0 +1,50 @@
+@use '../../../shared/styles/abstracts' as media;
+.wordCard {
+  border: 1px solid var(--card-border);
+  border-radius: 13px;
+  padding: 22px 25px;
+  min-width: 0;
+}
+.wordCard h2 {
+  font-size: 25px;
+  line-height: 1.4;
+  letter-spacing: -0.6px;
+  margin: 0 0 9px;
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+.wordCard p {
+  font-size: 23px;
+  line-height: 1.6;
+  margin: 0;
+  text-align: left;
+  overflow-wrap: anywhere;
+  font-family: var(--font-translation);
+}
+.wordCard .missingTranslation {
+  font-size: 21px;
+  color: var(--empty-text);
+}
+@include media.up(cards) {
+  .wordCard {
+    padding: 24px;
+  }
+}
+@include media.up(desktop) {
+  .wordCard {
+    min-height: 150px;
+  }
+}
+@include media.down(mobile) {
+  .wordCard {
+    padding: 18px 19px;
+  }
+  .wordCard h2 {
+    font-size: 23px;
+    margin-bottom: 8px;
+  }
+  .wordCard p,
+  .wordCard .missingTranslation {
+    font-size: 20px;
+  }
+}
