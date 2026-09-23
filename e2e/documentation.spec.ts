@@ -1,6 +1,8 @@
 import { expect, test } from '@playwright/test';
 import { routePaths } from '../src/app/routes/paths';
 
+const updateScreenshots = process.env.UPDATE_DOC_SCREENSHOTS === '1';
+
 // Fresh Playwright contexts keep documentation independent of personal data.
 for (const width of [320, 390, 768, 1024, 1440, 1920]) {
   test(`documentation screenshots at ${width}px`, async ({ page }) => {
@@ -11,11 +13,13 @@ for (const width of [320, 390, 768, 1024, 1440, 1920]) {
       expect(
         await page.evaluate(() => document.documentElement.scrollWidth),
       ).toBeLessThanOrEqual(width);
-      await page.screenshot({
-        path: `docs/screenshots/${name}-${width}.png`,
-        fullPage: name === 'manage' || name === 'public',
-        animations: 'disabled',
-      });
+      if (updateScreenshots) {
+        await page.screenshot({
+          path: `docs/screenshots/${name}-${width}.png`,
+          fullPage: name === 'manage' || name === 'public',
+          animations: 'disabled',
+        });
+      }
     };
     await page.goto(routePaths.management);
     await expect(
