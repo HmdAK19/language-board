@@ -1,0 +1,275 @@
+@use '../../shared/styles/abstracts' as media;
+
+.loadingShell {
+  width: 100%;
+  height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--background);
+  color: var(--text);
+}
+
+.nav {
+  width: min(calc(100% - 64px), calc(var(--container-width) - 64px));
+  min-height: 76px;
+  margin: var(--space-6) auto 0;
+  padding: var(--space-4) var(--space-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  border: var(--border-subtle);
+  border-radius: var(--radius-panel);
+  background: var(--nav-surface);
+  box-shadow: var(--shadow);
+}
+
+.publicMain {
+  box-sizing: border-box;
+  max-width: var(--container-width);
+  margin: var(--space-6) auto 0;
+  padding: 0 32px;
+}
+
+.publicMain {
+  height: calc(100dvh - 142px);
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+}
+
+.heading {
+  display: grid;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+}
+
+.managementPanel {
+  min-height: 410px;
+  padding: var(--space-4) 28px;
+  border-radius: var(--radius-panel);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.row {
+  min-height: 76px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  border-bottom: 1px solid var(--divider);
+}
+
+.block {
+  display: block;
+  border-radius: var(--radius-control);
+  background: color-mix(in srgb, var(--blue) 8%, var(--surface));
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.brand {
+  width: 150px;
+  height: 20px;
+}
+
+.navAction {
+  width: 142px;
+  height: 44px;
+}
+
+.eyebrow {
+  width: 92px;
+  height: 12px;
+  border-radius: 5px;
+}
+
+.title {
+  width: min(410px, 72vw);
+  height: 36px;
+}
+
+.rowLabel {
+  width: 34%;
+  height: 26px;
+}
+
+.rowInput {
+  flex: 1;
+  height: 48px;
+}
+
+.publicPanel {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+.publicCard {
+  min-height: 145px;
+  padding: var(--space-5);
+  display: grid;
+  align-content: start;
+  gap: var(--space-3);
+  border: var(--border-subtle);
+  border-radius: var(--radius-panel);
+}
+.cardTitle {
+  width: 56%;
+  height: 25px;
+}
+.cardText {
+  width: 92%;
+  height: 18px;
+}
+.cardTextShort {
+  width: 68%;
+  height: 18px;
+}
+.adminNav {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: 248px;
+  padding: 28px 20px;
+  display: grid;
+  align-content: start;
+  gap: 28px;
+  background: var(--nav-surface);
+  box-shadow: inset -1px 0 var(--card-border);
+}
+.adminBrand {
+  width: 150px;
+  height: 28px;
+}
+.adminContext {
+  width: 100%;
+  height: 80px;
+}
+.adminAction {
+  width: 100%;
+  height: 48px;
+  margin-top: 12px;
+}
+.adminMain {
+  margin-left: 248px;
+  padding: var(--space-6);
+  height: 100dvh;
+  overflow-y: auto;
+}
+.adminTitle {
+  width: 390px;
+  height: 36px;
+}
+.metrics {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-4);
+  margin: 0 0 var(--space-6);
+}
+.metric {
+  width: 120px;
+  height: 72px;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@include media.down(mobile) {
+  .nav {
+    width: calc(100% - 32px);
+    min-height: 64px;
+    margin-top: var(--space-4);
+    padding: var(--space-3);
+  }
+  .brand {
+    width: 124px;
+  }
+  .navAction {
+    width: 112px;
+    height: 38px;
+  }
+  .publicMain {
+    margin-top: var(--space-4);
+    padding: 0 24px;
+  }
+  .publicMain {
+    height: calc(100dvh - 104px);
+  }
+  .managementPanel {
+    min-height: 360px;
+    padding: var(--space-3) 12px;
+  }
+  .row {
+    min-height: 72px;
+    gap: var(--space-2);
+  }
+  .rowLabel {
+    width: 38%;
+    height: 22px;
+  }
+  .rowInput {
+    height: 42px;
+  }
+  .publicPanel {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+  .publicCard {
+    min-height: 110px;
+  }
+  .adminNav {
+    position: static;
+    width: auto;
+    min-height: 64px;
+    padding: var(--space-3) 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .adminBrand {
+    width: 124px;
+  }
+  .adminContext {
+    display: none;
+  }
+  .adminAction {
+    width: 112px;
+    height: 38px;
+    margin: 0;
+  }
+  .adminMain {
+    margin: 0;
+    padding: var(--space-4);
+    height: calc(100dvh - 64px);
+  }
+  .metrics {
+    justify-content: stretch;
+  }
+  .metric {
+    flex: 1;
+    width: auto;
+    height: 58px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .block {
+    animation: none;
+  }
+}

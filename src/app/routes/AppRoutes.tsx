@@ -1,16 +1,16 @@
 import { Suspense } from 'react';
-import { useRoutes } from 'react-router-dom';
+import { useLocation, useRoutes } from 'react-router-dom';
 import { routeConfig } from './routes';
+import { ManagementPageSkeleton, PublicPageSkeleton } from '@/shared';
 
 export const AppRoutes = () => {
   const routes = useRoutes(routeConfig);
+  const isManagement = useLocation().pathname.startsWith('/manage');
 
   return (
     <Suspense
       fallback={
-        <p role="status" className="empty-state">
-          Loading translations…
-        </p>
+        isManagement ? <ManagementPageSkeleton /> : <PublicPageSkeleton />
       }
     >
       {routes}
