@@ -5,6 +5,7 @@ import {
 } from '@hello-pangea/dnd';
 
 import { type Keyword, type Language, type LanguageDefinition } from '../types';
+import { ActionIcon } from './ActionIcon';
 import styles from './KeywordRow.module.scss';
 
 interface KeywordRowProps {
@@ -49,7 +50,7 @@ export const KeywordRowContent = ({
         disabled={isDragDisabled}
         title="Drag to reorder, or press Space and use arrow keys"
       >
-        ⠿
+        <ActionIcon name="grip" />
       </button>
       <label htmlFor={`translation-${item.id}`} className={styles.keywordName}>
         {item.keyword}
@@ -71,16 +72,18 @@ export const KeywordRowContent = ({
         className={styles.editLanguages}
         onClick={onEditTranslations}
         aria-label={`Edit all translations for ${item.keyword}`}
+        title={`Edit all translations for ${item.keyword}`}
       >
-        ✎
+        <ActionIcon name="pencil" />
       </button>
       <button
         type="button"
         className={styles.deleteKeyword}
         onClick={onDelete}
         aria-label={`Delete ${item.keyword}`}
+        title={`Delete ${item.keyword}`}
       >
-        ×
+        <ActionIcon name="trash" />
       </button>
     </div>
   );

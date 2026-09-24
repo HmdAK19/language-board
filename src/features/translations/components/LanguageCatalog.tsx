@@ -1,6 +1,7 @@
 import { Button, VirtualList } from '@/shared';
 
 import type { LanguageDefinition } from '../types';
+import { ActionIcon } from './ActionIcon';
 import styles from './LanguageCatalog.module.scss';
 
 interface LanguageCatalogProps {
@@ -37,25 +38,28 @@ export const LanguageCatalog = ({
               <Button
                 variant="secondary"
                 aria-label={`Move ${language.label} up`}
+                title={`Move ${language.label} up`}
                 disabled={index === 0}
                 onClick={() => onMove(index, index - 1)}
               >
-                ↑
+                <ActionIcon name="arrow-up" />
               </Button>
               <Button
                 variant="secondary"
                 aria-label={`Move ${language.label} down`}
+                title={`Move ${language.label} down`}
                 disabled={index === languages.length - 1}
                 onClick={() => onMove(index, index + 1)}
               >
-                ↓
+                <ActionIcon name="arrow-down" />
               </Button>
               <Button
                 variant="secondary"
                 aria-label={`Delete ${language.label}`}
+                title={`Delete ${language.label}`}
                 onClick={() => onRemove(language)}
               >
-                ×
+                <ActionIcon name="trash" />
               </Button>
             </div>
           </div>

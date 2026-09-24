@@ -73,14 +73,29 @@
   gap: 4px;
 
   button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
     padding: 0;
-    border-radius: 8px;
+    border-color: transparent;
+    border-radius: 10px;
+    background: transparent;
     color: var(--blue);
+    transition:
+      color 150ms ease,
+      background-color 150ms ease,
+      transform 150ms ease;
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    &:hover:not(:disabled) {
+      background: var(--nav-link-surface);
+      transform: translateY(-1px);
+    }
 
     &:last-child {
       color: var(--missing-label);
@@ -88,7 +103,6 @@
 
     &:last-child:hover:not(:disabled) {
       background: var(--missing-focus);
-      border-color: var(--missing-label);
     }
   }
 }

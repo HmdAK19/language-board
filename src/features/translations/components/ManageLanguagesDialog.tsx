@@ -4,6 +4,7 @@ import { normalizeLanguageCode } from '../domain';
 import { useTranslations } from '../hooks';
 import type { LanguageDefinition } from '../types';
 import { AddLanguageForm } from './AddLanguageForm';
+import { ActionIcon } from './ActionIcon';
 import { LanguageCatalog } from './LanguageCatalog';
 import styles from './ManageLanguagesDialog.module.scss';
 
@@ -77,10 +78,12 @@ export const ManageLanguagesDialog = ({ onClose }: { onClose: () => void }) => {
       <Button
         className={styles.deleteAllButton}
         variant="secondary"
+        aria-label="Delete all languages"
+        title="Delete all languages"
         disabled={!data.languages.length}
         onClick={clearLanguages}
       >
-        Delete all languages
+        <ActionIcon name="trash" />
       </Button>
       <AddLanguageForm data={data} onAdd={addLanguage} onCancel={onClose} />
     </Modal>
