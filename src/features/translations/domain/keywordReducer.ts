@@ -2,6 +2,7 @@ import type { Action, Dataset } from '../types';
 
 import {
   addKeyword,
+  clearKeywords,
   deleteKeyword,
   editKeywordTranslation,
   reorderKeywords,
@@ -10,7 +11,15 @@ import {
 
 type KeywordAction = Extract<
   Action,
-  { type: 'add' | 'edit' | 'updateKeyword' | 'deleteKeyword' | 'move' }
+  {
+    type:
+      | 'add'
+      | 'edit'
+      | 'updateKeyword'
+      | 'deleteKeyword'
+      | 'move'
+      | 'clearKeywords';
+  }
 >;
 
 export const reduceKeywordAction = (
@@ -28,5 +37,7 @@ export const reduceKeywordAction = (
       return deleteKeyword(data, action);
     case 'move':
       return reorderKeywords(data, action);
+    case 'clearKeywords':
+      return clearKeywords(data);
   }
 };

@@ -25,7 +25,7 @@ export const ManagementDialogs = ({
   if (dialog.type === 'addKeyword')
     return <AddKeywordDialog onClose={onClose} />;
 
-  const keyword = data.keywords.byId[dialog.keywordId];
+  const keyword = data.keywords[dialog.keywordId];
   return keyword ? (
     <AddKeywordDialog keyword={keyword} onClose={onClose} />
   ) : null;

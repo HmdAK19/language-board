@@ -4,7 +4,7 @@ import { routePaths } from '../src/app/routes/paths';
 const seed = async (page: Page, keywordCount = 2000, languageCount = 1) => {
   await page.addInitScript(
     ({ keywordCount, languageCount }) => {
-      if (localStorage.getItem('language-board.dataset.v2')) return;
+      if (localStorage.getItem('language-board.dataset')) return;
       const languages = Array.from({ length: languageCount }, (_, index) => ({
         code: index === 0 ? 'fa' : `en-x-l${index}`,
         label: `Language ${index}`,
@@ -16,14 +16,11 @@ const seed = async (page: Page, keywordCount = 2000, languageCount = 1) => {
         translations: { fa: `Translation ${index}` },
       }));
       localStorage.setItem(
-        'language-board.dataset.v2',
+        'language-board.dataset',
         JSON.stringify({
-          version: 2,
           languages,
-          keywords: {
-            order: rows.map((row) => row.id),
-            byId: Object.fromEntries(rows.map((row) => [row.id, row])),
-          },
+          keywords: Object.fromEntries(rows.map((row) => [row.id, row])),
+          order: rows.map((row) => row.id),
         }),
       );
     },
@@ -157,6 +154,25 @@ test('large language catalog and form retain values across unmounts', async ({
   ).toHaveValue('Saved at end');
 });
 
+test('switching languages preserves the keyword list scroll position', async ({
+  page,
+}) => {
+  await seed(page, 2000, 2);
+  await page.goto(routePaths.management);
+
+  const list = page.getByRole('list', { name: 'Keywords', exact: true });
+  await list.evaluate((element) => {
+    element.scrollTop = 3200;
+  });
+  const scrollTop = await list.evaluate((element) => element.scrollTop);
+
+  await page.getByRole('combobox').selectOption('en-x-l1');
+
+  await expect
+    .poll(() => list.evaluate((element) => element.scrollTop))
+    .toBe(scrollTop);
+});
+
 test('keyboard drag crosses a virtual viewport and persists order', async ({
   page,
 }) => {
@@ -180,9 +196,9 @@ test('keyboard drag crosses a virtual viewport and persists order', async ({
     .poll(() =>
       page.evaluate(() => {
         const data = JSON.parse(
-          localStorage.getItem('language-board.dataset.v2') ?? '{}',
+          localStorage.getItem('language-board.dataset') ?? '{}',
         );
-        return data.keywords.order.indexOf('word-0');
+        return data.order.indexOf('word-0');
       }),
     )
     .toBe(20);

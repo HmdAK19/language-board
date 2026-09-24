@@ -1,6 +1,5 @@
 import { useLayoutEffect, useState, type RefObject } from 'react';
 
-// Lists must scroll themselves or use the window, not a nested scroll parent.
 export const useListViewport = (ref: RefObject<HTMLUListElement | null>) => {
   const [windowScroll, setWindowScroll] = useState(false);
   const [margin, setMargin] = useState(0);

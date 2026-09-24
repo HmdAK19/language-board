@@ -47,7 +47,7 @@ export const KeywordList = ({
           mode="virtual"
           renderClone={(provided, snapshot, rubric) => (
             <KeywordRowContent
-              item={data.keywords.byId[rubric.draggableId]}
+              item={data.keywords[rubric.draggableId]}
               language={language}
               direction={direction}
               provided={provided}
@@ -60,7 +60,7 @@ export const KeywordList = ({
         >
           {(provided) => (
             <VirtualList
-              key={JSON.stringify([filters.query, filters.status, language])}
+              key={JSON.stringify([filters.query, filters.status])}
               className={styles.list}
               listRef={provided.innerRef}
               {...provided.droppableProps}
@@ -76,7 +76,7 @@ export const KeywordList = ({
               }
               renderItem={(id, index) => (
                 <KeywordRow
-                  item={data.keywords.byId[id]}
+                  item={data.keywords[id]}
                   index={index}
                   isDragDisabled={filters.active}
                   language={language}

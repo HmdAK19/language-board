@@ -3,26 +3,23 @@ import { initialLanguages, words } from './seed';
 
 export const createDatasetFromKeywords = (rows: Keyword[]): Dataset => {
   return {
-    version: 2,
     languages: initialLanguages.map((language) => ({
       ...language,
     })),
-    keywords: {
-      order: rows.map((row) => row.id),
-      byId: Object.fromEntries(
-        rows.map((row) => [
-          row.id,
-          {
-            ...row,
-            translations: Object.fromEntries(
-              Object.entries(row.translations).filter(([, value]) =>
-                value?.trim(),
-              ),
+    keywords: Object.fromEntries(
+      rows.map((row) => [
+        row.id,
+        {
+          ...row,
+          translations: Object.fromEntries(
+            Object.entries(row.translations).filter(([, value]) =>
+              value?.trim(),
             ),
-          },
-        ]),
-      ),
-    },
+          ),
+        },
+      ]),
+    ),
+    order: rows.map((row) => row.id),
   };
 };
 

@@ -24,7 +24,7 @@ export const useKeywordFilters = () => {
     setStatus,
     active,
     ids,
-    total: data.keywords.order.length,
+    total: data.order.length,
     languageLabel:
       data.languages.find((item) => item.code === language)?.label ?? language,
     reset: () => {

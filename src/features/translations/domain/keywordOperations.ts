@@ -36,7 +36,7 @@ export const addKeyword = (
 ): Dataset => {
   if (
     !isSafeEntityId(action.id) ||
-    hasOwnProperty(data.keywords.byId, action.id) ||
+    hasOwnProperty(data.keywords, action.id) ||
     getKeywordValidationError(action.keyword, data)
   )
     return data;
@@ -54,10 +54,8 @@ export const addKeyword = (
   };
   return {
     ...data,
-    keywords: {
-      order: [...data.keywords.order, keyword.id],
-      byId: { ...data.keywords.byId, [keyword.id]: keyword },
-    },
+    keywords: { ...data.keywords, [keyword.id]: keyword },
+    order: [...data.order, keyword.id],
   };
 };
 
@@ -68,11 +66,11 @@ export const editKeywordTranslation = (
   if (
     !hasLanguage(data, action.language) ||
     action.value.length > 500 ||
-    !hasOwnProperty(data.keywords.byId, action.id)
+    !hasOwnProperty(data.keywords, action.id)
   )
     return data;
 
-  const keyword = data.keywords.byId[action.id];
+  const keyword = data.keywords[action.id];
   const value = action.value.trim();
   if ((keyword.translations[action.language] ?? '') === value) return data;
 
@@ -84,10 +82,7 @@ export const editKeywordTranslation = (
     ...data,
     keywords: {
       ...data.keywords,
-      byId: {
-        ...data.keywords.byId,
-        [keyword.id]: { ...keyword, translations },
-      },
+      [keyword.id]: { ...keyword, translations },
     },
   };
 };
@@ -96,7 +91,7 @@ export const updateKeyword = (
   data: Dataset,
   action: Extract<Action, { type: 'updateKeyword' }>,
 ): Dataset => {
-  const current = data.keywords.byId[action.id];
+  const current = data.keywords[action.id];
   if (!current || getKeywordValidationError(action.keyword, data, action.id))
     return data;
 
@@ -107,13 +102,10 @@ export const updateKeyword = (
     ...data,
     keywords: {
       ...data.keywords,
-      byId: {
-        ...data.keywords.byId,
-        [action.id]: {
-          ...current,
-          keyword: action.keyword.trim(),
-          translations,
-        },
+      [action.id]: {
+        ...current,
+        keyword: action.keyword.trim(),
+        translations,
       },
     },
   };
@@ -123,15 +115,13 @@ export const deleteKeyword = (
   data: Dataset,
   action: Extract<Action, { type: 'deleteKeyword' }>,
 ): Dataset => {
-  if (!hasOwnProperty(data.keywords.byId, action.id)) return data;
-  const byId = { ...data.keywords.byId };
-  delete byId[action.id];
+  if (!hasOwnProperty(data.keywords, action.id)) return data;
+  const keywords = { ...data.keywords };
+  delete keywords[action.id];
   return {
     ...data,
-    keywords: {
-      order: data.keywords.order.filter((id) => id !== action.id),
-      byId,
-    },
+    keywords,
+    order: data.order.filter((id) => id !== action.id),
   };
 };
 
@@ -139,8 +129,9 @@ export const reorderKeywords = (
   data: Dataset,
   action: Extract<Action, { type: 'move' }>,
 ): Dataset => {
-  const order = moveArrayItem(data.keywords.order, action.from, action.to);
-  return order === data.keywords.order
-    ? data
-    : { ...data, keywords: { ...data.keywords, order } };
+  const order = moveArrayItem(data.order, action.from, action.to);
+  return order === data.order ? data : { ...data, order };
 };
+
+export const clearKeywords = (data: Dataset): Dataset =>
+  data.order.length ? { ...data, keywords: {}, order: [] } : data;

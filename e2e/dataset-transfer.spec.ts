@@ -1,18 +1,15 @@
 import { test, expect } from '@playwright/test';
 
 const imported = {
-  version: 2,
   languages: [{ code: 'de', label: 'Deutsch', direction: 'ltr' }],
   keywords: {
-    order: ['imported-word'],
-    byId: {
-      'imported-word': {
-        id: 'imported-word',
-        keyword: 'Welcome',
-        translations: { de: 'Willkommen' },
-      },
+    'imported-word': {
+      id: 'imported-word',
+      keyword: 'Welcome',
+      translations: { de: 'Willkommen' },
     },
   },
+  order: ['imported-word'],
 };
 
 const upload = {

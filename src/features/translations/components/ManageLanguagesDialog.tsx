@@ -1,4 +1,4 @@
-import { Modal } from '@/shared';
+import { Button, Modal } from '@/shared';
 
 import { normalizeLanguageCode } from '../domain';
 import { useTranslations } from '../hooks';
@@ -50,6 +50,18 @@ export const ManageLanguagesDialog = ({ onClose }: { onClose: () => void }) => {
     }
   };
 
+  const clearLanguages = () => {
+    if (
+      data.languages.length &&
+      window.confirm(
+        'Delete all languages? Every translation will also be removed.',
+      )
+    ) {
+      dispatch({ type: 'clearLanguages' });
+      setLanguage('');
+    }
+  };
+
   return (
     <Modal
       title="Manage languages"
@@ -61,6 +73,13 @@ export const ManageLanguagesDialog = ({ onClose }: { onClose: () => void }) => {
         onMove={moveLanguage}
         onRemove={removeLanguage}
       />
+      <Button
+        variant="secondary"
+        disabled={!data.languages.length}
+        onClick={clearLanguages}
+      >
+        Delete all languages
+      </Button>
       <AddLanguageForm data={data} onAdd={addLanguage} onCancel={onClose} />
     </Modal>
   );

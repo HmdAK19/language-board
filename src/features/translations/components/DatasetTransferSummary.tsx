@@ -12,7 +12,7 @@ export const DatasetTransferSummary = ({
 }: DatasetTransferSummaryProps) => (
   <div className={styles.summary}>
     <span>
-      <strong>{data.keywords.order.length}</strong> keywords
+      <strong>{data.order.length}</strong> keywords
     </span>
     <span>
       <strong>{data.languages.length}</strong> languages

@@ -1,4 +1,6 @@
-export const isObjectRecord = (value: unknown): value is Record<string, unknown> =>
+export const isObjectRecord = (
+  value: unknown,
+): value is Record<string, unknown> =>
   !!value && typeof value === 'object' && !Array.isArray(value);
 
 export const hasOwnProperty = (value: object, key: string) =>

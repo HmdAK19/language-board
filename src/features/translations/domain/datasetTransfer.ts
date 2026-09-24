@@ -2,22 +2,19 @@ import type { Dataset } from '../types';
 import { isValidDataset } from './validation';
 
 const copyDataset = (data: Dataset): Dataset => ({
-  version: 2,
   languages: data.languages.map(({ code, label, direction }) => ({
     code,
     label,
     direction,
   })),
-  keywords: {
-    order: [...data.keywords.order],
-    byId: Object.fromEntries(
-      data.keywords.order.map((id) => {
-        const { keyword, translations } = data.keywords.byId[id];
+  keywords: Object.fromEntries(
+    data.order.map((id) => {
+      const { keyword, translations } = data.keywords[id];
 
-        return [id, { id, keyword, translations: { ...translations } }];
-      }),
-    ),
-  },
+      return [id, { id, keyword, translations: { ...translations } }];
+    }),
+  ),
+  order: [...data.order],
 });
 
 export const parseDatasetJson = (text: string): Dataset => {
@@ -33,7 +30,7 @@ export const parseDatasetJson = (text: string): Dataset => {
 
   if (!isValidDataset(value)) {
     throw new Error(
-      'Use a Language Board JSON export (version 2) with valid languages, unique keywords and matching translations.',
+      'Use a valid Language Board JSON export with matching languages, keywords and order.',
     );
   }
 

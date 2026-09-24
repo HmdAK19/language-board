@@ -3,10 +3,7 @@ import { useForm } from 'react-hook-form';
 
 import { Button, TextField } from '@/shared';
 
-import {
-  createLanguageFormSchema,
-  type LanguageFormValues,
-} from '../schemas';
+import { createLanguageFormSchema, type LanguageFormValues } from '../schemas';
 import type { Dataset, LanguageDefinition } from '../types';
 import styles from './AddLanguageForm.module.scss';
 

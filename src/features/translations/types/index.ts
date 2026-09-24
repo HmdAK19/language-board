@@ -13,12 +13,9 @@ export interface Keyword {
 }
 
 export interface Dataset {
-  version: 2;
   languages: LanguageDefinition[];
-  keywords: {
-    order: string[];
-    byId: Record<string, Keyword>;
-  };
+  keywords: Record<string, Keyword>;
+  order: string[];
 }
 
 export type Action =
@@ -64,4 +61,6 @@ export type Action =
       type: 'move';
       from: number;
       to: number;
-    };
+    }
+  | { type: 'clearKeywords' }
+  | { type: 'clearLanguages' };

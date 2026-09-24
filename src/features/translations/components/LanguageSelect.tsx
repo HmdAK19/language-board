@@ -10,6 +10,7 @@ export const LanguageSelect = () => {
         aria-label="Translation language"
         className={styles.languageSelect}
         value={language}
+        disabled={!data.languages.length}
         onChange={(event) => {
           const selected = data.languages.find(
             (item) => item.code === event.target.value,
@@ -17,6 +18,7 @@ export const LanguageSelect = () => {
           if (selected) setLanguage(selected.code);
         }}
       >
+        {!data.languages.length && <option value="">No languages</option>}
         {data.languages.map((item) => (
           <option key={item.code} value={item.code} lang={item.code}>
             {item.label}

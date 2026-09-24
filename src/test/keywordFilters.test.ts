@@ -26,10 +26,8 @@ describe('keyword filtering', () => {
     ]);
     expect(filterKeywords(data, 'fa', 'food', 'translated')).toEqual([]);
     expect(filterKeywords(data, 'fr', '', 'missing')).toEqual([]);
-    expect(filterKeywords(data, 'fa', '   ', 'all')).toEqual(
-      data.keywords.order,
-    );
+    expect(filterKeywords(data, 'fa', '   ', 'all')).toEqual(data.order);
 
-    expect(data.keywords.order).toHaveLength(8);
+    expect(data.order).toHaveLength(8);
   });
 });

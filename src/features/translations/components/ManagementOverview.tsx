@@ -8,13 +8,13 @@ interface ManagementOverviewProps {
 export const ManagementOverview = ({ data }: ManagementOverviewProps) => {
   const primaryLanguage = data.languages[0]?.code;
   const missingTranslations = primaryLanguage
-    ? data.keywords.order.filter(
-        (id) => !data.keywords.byId[id].translations[primaryLanguage]?.trim(),
+    ? data.order.filter(
+        (id) => !data.keywords[id].translations[primaryLanguage]?.trim(),
       ).length
     : 0;
 
   const metrics = [
-    { label: 'Keywords', value: data.keywords.order.length },
+    { label: 'Keywords', value: data.order.length },
     { label: 'Languages', value: data.languages.length },
     {
       label: 'Needs translation',

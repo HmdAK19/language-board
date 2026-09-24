@@ -69,7 +69,7 @@ const DatasetImportPreview = ({
     <DatasetTransferSummary data={state.data} />
 
     <p className={styles.warning}>
-      This replaces all {currentData.keywords.order.length} current keywords and{' '}
+      This replaces all {currentData.order.length} current keywords and{' '}
       {currentData.languages.length} languages. Download a backup above if you
       want to keep them.
     </p>

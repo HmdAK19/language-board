@@ -14,7 +14,7 @@ import {
 describe('JSON dataset transfer', () => {
   it('round-trips Unicode, empty translations and ordering', () => {
     const data = createInitialDataset();
-    data.keywords.order.reverse();
+    data.order.reverse();
     data.languages.reverse();
 
     expect(parseDatasetJson(serializeDataset(data))).toEqual(data);
@@ -31,15 +31,15 @@ describe('JSON dataset transfer', () => {
       null,
       [],
       {},
-      { ...createInitialDataset(), version: 3 },
+      { ...createInitialDataset(), order: ['missing'] },
     ]) {
       expect(() => parseDatasetJson(JSON.stringify(value))).toThrow(
-        'version 2',
+        'valid Language Board JSON export',
       );
     }
 
     const data = createInitialDataset();
-    data.keywords.order.push(data.keywords.order[0]);
+    data.order.push(data.order[0]);
 
     expect(() => parseDatasetJson(JSON.stringify(data))).toThrow();
   });
@@ -47,11 +47,11 @@ describe('JSON dataset transfer', () => {
   it('rejects unsafe identifiers, unknown languages and invalid directions', () => {
     const data = createInitialDataset();
     const unsafe = JSON.parse(serializeDataset(data));
-    unsafe.keywords.order[0] = '__proto__';
+    unsafe.order[0] = '__proto__';
 
     expect(() => parseDatasetJson(JSON.stringify(unsafe))).toThrow();
 
-    data.keywords.byId['word-1'].translations.unknown = 'test';
+    data.keywords['word-1'].translations.unknown = 'test';
 
     expect(() => parseDatasetJson(JSON.stringify(data))).toThrow();
 

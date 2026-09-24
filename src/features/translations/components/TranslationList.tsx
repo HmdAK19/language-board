@@ -28,7 +28,7 @@ export const TranslationList = () => {
     <div ref={container} className={styles.container}>
       <KeywordFilters filters={filters} />
       <VirtualList
-        key={JSON.stringify([columns, filters.query, filters.status, language])}
+        key={JSON.stringify([columns, filters.query, filters.status])}
         className={styles.list}
         aria-label="Translations"
         items={rows}
@@ -45,8 +45,8 @@ export const TranslationList = () => {
             {row.map((id) => (
               <TranslationCard
                 key={id}
-                keyword={data.keywords.byId[id].keyword}
-                value={data.keywords.byId[id].translations[language] ?? ''}
+                keyword={data.keywords[id].keyword}
+                value={data.keywords[id].translations[language] ?? ''}
                 language={language}
               />
             ))}

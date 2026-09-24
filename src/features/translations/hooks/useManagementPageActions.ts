@@ -33,7 +33,7 @@ export const useManagementPageActions = () => {
   );
   const deleteKeyword = useCallback(
     (keywordId: string) => {
-      const keyword = data.keywords.byId[keywordId];
+      const keyword = data.keywords[keywordId];
       if (
         keyword &&
         window.confirm(
@@ -42,8 +42,15 @@ export const useManagementPageActions = () => {
       )
         dispatch({ type: 'deleteKeyword', id: keywordId });
     },
-    [data.keywords.byId, dispatch],
+    [data.keywords, dispatch],
   );
+  const clearKeywords = useCallback(() => {
+    if (
+      data.order.length &&
+      window.confirm('Delete all keywords and all of their translations?')
+    )
+      dispatch({ type: 'clearKeywords' });
+  }, [data.order.length, dispatch]);
 
   return {
     data,
@@ -54,5 +61,6 @@ export const useManagementPageActions = () => {
     openEditKeyword,
     openDatasetTransfer,
     deleteKeyword,
+    clearKeywords,
   };
 };

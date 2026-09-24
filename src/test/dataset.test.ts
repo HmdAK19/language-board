@@ -5,21 +5,18 @@ import {
   isValidDataset,
   getKeywordValidationError,
   datasetReducer,
-  migrateStoredDataset,
 } from '../features/translations/domain';
 import { createLocalRepository } from '../features/translations/services';
 
 describe('translation domain', () => {
   it('deletes a keyword and all of its translations', () => {
     const original = createInitialDataset();
-    const id = original.keywords.order[0];
+    const id = original.order[0];
     const result = datasetReducer(original, { type: 'deleteKeyword', id });
 
-    expect(result.keywords.order).not.toContain(id);
-    expect(result.keywords.byId).not.toHaveProperty(id);
-    expect(result.keywords.order).toHaveLength(
-      original.keywords.order.length - 1,
-    );
+    expect(result.order).not.toContain(id);
+    expect(result.keywords).not.toHaveProperty(id);
+    expect(result.order).toHaveLength(original.order.length - 1);
   });
 
   it('adds one translation and leaves other languages empty', () => {
@@ -30,7 +27,7 @@ describe('translation domain', () => {
       language: 'fa',
       value: ' خوش آمدید ',
     });
-    expect(data.keywords.byId.new).toEqual({
+    expect(data.keywords.new).toEqual({
       id: 'new',
       keyword: 'Welcome',
       translations: {
@@ -60,15 +57,9 @@ describe('translation domain', () => {
       language: 'fa',
       value: '',
     });
-    expect(
-      result.keywords.byId[result.keywords.order[0]].translations.fa,
-    ).toBeUndefined();
-    expect(
-      original.keywords.byId[original.keywords.order[0]].translations.fa,
-    ).toBe('سلام');
-    expect(result.keywords.byId[result.keywords.order[0]].translations.fr).toBe(
-      'Bonjour',
-    );
+    expect(result.keywords[result.order[0]].translations.fa).toBeUndefined();
+    expect(original.keywords[original.order[0]].translations.fa).toBe('سلام');
+    expect(result.keywords[result.order[0]].translations.fr).toBe('Bonjour');
   });
   it('reorders while preserving stable ids and all translations', () => {
     const original = createInitialDataset();
@@ -77,15 +68,11 @@ describe('translation domain', () => {
       from: 0,
       to: 7,
     });
-    expect(result.keywords.byId[result.keywords.order[7]]).toEqual(
-      original.keywords.byId[original.keywords.order[0]],
+    expect(result.keywords[result.order[7]]).toEqual(
+      original.keywords[original.order[0]],
     );
-    expect(result.keywords.byId[result.keywords.order[0]].keyword).toBe(
-      'World',
-    );
-    expect(original.keywords.byId[original.keywords.order[0]].keyword).toBe(
-      'Hello',
-    );
+    expect(result.keywords[result.order[0]].keyword).toBe('World');
+    expect(original.keywords[original.order[0]].keyword).toBe('Hello');
     expect(
       datasetReducer(original, {
         type: 'move',
@@ -99,24 +86,20 @@ describe('translation domain', () => {
     expect(
       isValidDataset({
         ...createInitialDataset(),
-        keywords: {
-          order: [],
-          byId: {},
-        },
+        keywords: {},
+        order: [],
       }),
     ).toBe(true);
     expect(
       isValidDataset({
-        version: 2,
         keywords: [],
       }),
     ).toBe(false);
     const data = createInitialDataset();
-    data.keywords.order.push(data.keywords.order[0]);
+    data.order.push(data.order[0]);
     expect(isValidDataset(data)).toBe(false);
     expect(
       isValidDataset({
-        version: 1,
         keywords: [
           {
             id: 'x',
@@ -141,12 +124,12 @@ describe('persistence boundary', () => {
       },
     }));
     expect(repository.load().warning).toBe('');
-    expect(stored).toContain('"version":2');
+    expect(stored).not.toContain('"version"');
     const data = createInitialDataset();
     repository.save(data);
     expect(repository.load().data).toEqual(data);
   });
-  it.each(['{broken', '{"version":1,"keywords":[{}]}'])(
+  it.each(['{broken', '{"languages":[],"keywords":[{}],"order":[]}'])(
     'recovers corrupt storage: %s',
     (raw) => {
       const repository = createLocalRepository(() => ({
@@ -184,8 +167,8 @@ it('adds arbitrary languages without expanding existing translations and preserv
     language: 'pt-BR',
     value: 'Olá',
   });
-  expect(edited.keywords.byId['word-1'].translations['pt-BR']).toBe('Olá');
-  expect(edited.keywords.byId['word-1'].translations.fa).toBe('سلام');
+  expect(edited.keywords['word-1'].translations['pt-BR']).toBe('Olá');
+  expect(edited.keywords['word-1'].translations.fa).toBe('سلام');
   const reordered = datasetReducer(
     datasetReducer(edited, {
       type: 'move',
@@ -207,7 +190,7 @@ it('adds arbitrary languages without expanding existing translations and preserv
   }));
   repo.save(reordered);
   expect(repo.load().data).toEqual(reordered);
-  expect(reordered.keywords.order[3]).toBe('word-1');
+  expect(reordered.order[3]).toBe('word-1');
   expect(reordered.languages[0].code).toBe('pt-BR');
 });
 
@@ -260,92 +243,34 @@ it('rejects duplicate languages, invalid codes, unknown references and oversized
     }),
   ).toBe(data);
   const invalid = structuredClone(data);
-  invalid.keywords.byId['word-1'].translations.de = 'Hallo';
+  invalid.keywords['word-1'].translations.de = 'Hallo';
   expect(isValidDataset(invalid)).toBe(false);
   const orphan = structuredClone(data);
-  orphan.keywords.order[0] = 'missing';
+  orphan.order[0] = 'missing';
   expect(isValidDataset(orphan)).toBe(false);
   const unsafe = JSON.parse(
-    '{"version":2,"languages":[{"code":"en","label":"English","direction":"ltr"}],"keywords":{"order":["__proto__"],"byId":{"__proto__":{"id":"__proto__","keyword":"X","translations":{}}}}}',
+    '{"languages":[{"code":"en","label":"English","direction":"ltr"}],"keywords":{"__proto__":{"id":"__proto__","keyword":"X","translations":{}}},"order":["__proto__"]}',
   );
   expect(isValidDataset(unsafe)).toBe(false);
 });
 
-it('migrates legacy data without losing values, IDs or order and retains the old storage key', () => {
-  const legacy = JSON.stringify({
-    version: 1,
-    keywords: [
-      {
-        id: 'b',
-        keyword: 'Custom',
-        translations: {
-          fa: 'سفارشی',
-          en: '',
-          fr: 'Personnalisé',
-        },
-      },
-      {
-        id: 'a',
-        keyword: 'Hello',
-        translations: {
-          fa: 'درود',
-          en: 'Hello',
-          fr: 'Bonjour',
-        },
-      },
-    ],
+it('clears keywords and languages while preserving a valid dataset', () => {
+  const withoutKeywords = datasetReducer(createInitialDataset(), {
+    type: 'clearKeywords',
   });
-  const entries = new Map([['language-board.dataset.v1', legacy]]);
-  const repo = createLocalRepository(() => ({
-    getItem: (key) => entries.get(key) ?? null,
-    setItem: (key, value) => {
-      entries.set(key, value);
-    },
-  }));
-  const { data, warning } = repo.load();
-  expect(warning).toBe('');
-  expect(data.version).toBe(2);
-  expect(data.keywords.order).toEqual(['b', 'a']);
-  expect(data.keywords.byId.b.translations).toEqual({
-    fa: 'سفارشی',
-    fr: 'Personnalisé',
-  });
-  repo.save(data);
-  expect(entries.get('language-board.dataset.v1')).toBe(legacy);
-  expect(repo.load().data).toEqual(data);
-});
+  expect(withoutKeywords.order).toEqual([]);
+  expect(withoutKeywords.keywords).toEqual({});
+  expect(isValidDataset(withoutKeywords)).toBe(true);
 
-it('uses the version migration registry for legacy English datasets', () => {
-  const data = createInitialDataset();
-  const legacyEnglishDataset = {
-    ...data,
-    languages: data.languages.map((language) =>
-      language.code === 'ar'
-        ? { code: 'en', label: 'English', direction: 'ltr' as const }
-        : language,
+  const withoutLanguages = datasetReducer(createInitialDataset(), {
+    type: 'clearLanguages',
+  });
+  expect(withoutLanguages.languages).toEqual([]);
+  expect(
+    withoutLanguages.order.every(
+      (id) =>
+        Object.keys(withoutLanguages.keywords[id].translations).length === 0,
     ),
-    keywords: {
-      ...data.keywords,
-      byId: Object.fromEntries(
-        data.keywords.order.map((id) => {
-          const keyword = data.keywords.byId[id];
-          const translations = { ...keyword.translations };
-          translations.en = translations.ar;
-          delete translations.ar;
-
-          return [id, { ...keyword, translations }];
-        }),
-      ),
-    },
-  };
-
-  const migrated = migrateStoredDataset(legacyEnglishDataset);
-
-  expect(migrated?.languages.map(({ code }) => code)).toEqual([
-    'fa',
-    'ar',
-    'fr',
-  ]);
-  expect(migrated?.keywords.byId['word-1'].translations.ar).toBe('مرحباً');
-  expect(migrateStoredDataset({ version: 3 })).toBeNull();
+  ).toBe(true);
+  expect(isValidDataset(withoutLanguages)).toBe(true);
 });

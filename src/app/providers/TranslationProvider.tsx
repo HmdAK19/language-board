@@ -23,11 +23,16 @@ export const TranslationProvider = ({
 }) => {
   const [initial] = useState(() => repository.load());
   const [data, dispatch] = useReducer(datasetReducer, initial.data);
-  const [language, setLanguage] = useState<Language>(
-    () => initial.data.languages[0].code,
-  );
   const [warning, setWarning] = useState(initial.warning);
   const [saved, setSaved] = useState(false);
+  const [language, setLanguage] = useState<Language>(
+    () => initial.data.languages[0]?.code ?? '',
+  );
+
+  useEffect(() => {
+    if (!data.languages.some((item) => item.code === language))
+      setLanguage(data.languages[0]?.code ?? '');
+  }, [data.languages, language]);
 
   useEffect(() => {
     try {

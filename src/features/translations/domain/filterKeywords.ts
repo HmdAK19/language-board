@@ -20,8 +20,8 @@ export const filterKeywords = (
 ): string[] => {
   const terms = normalizeSearch(query).split(/\s+/).filter(Boolean);
 
-  return data.keywords.order.filter((id) => {
-    const item = data.keywords.byId[id];
+  return data.order.filter((id) => {
+    const item = data.keywords[id];
     const translation = item.translations[language] ?? '';
     const translated = Boolean(translation.trim());
 

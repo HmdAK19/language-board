@@ -1,12 +1,7 @@
-import {
-  createInitialDataset,
-  isValidDataset,
-  migrateStoredDataset,
-} from '../domain';
+import { createInitialDataset, isValidDataset } from '../domain';
 import type { Dataset } from '../types';
 
-export const STORAGE_KEY = 'language-board.dataset.v2';
-export const LEGACY_STORAGE_KEY = 'language-board.dataset.v1';
+export const STORAGE_KEY = 'language-board.dataset';
 
 export interface DatasetRepository {
   load(): {
@@ -24,9 +19,8 @@ export const createLocalRepository = (
     load() {
       try {
         const storage = getStorage();
-        const current = storage.getItem(STORAGE_KEY);
-        unreadableCurrentData = current !== null;
-        const raw = current ?? storage.getItem(LEGACY_STORAGE_KEY);
+        const raw = storage.getItem(STORAGE_KEY);
+        unreadableCurrentData = raw !== null;
 
         if (raw === null) {
           const seed = createInitialDataset();
@@ -37,10 +31,8 @@ export const createLocalRepository = (
             warning: '',
           };
         }
-        const data = migrateStoredDataset(JSON.parse(raw) as unknown);
-        if (!data) throw new Error('Invalid dataset');
-        if (current === null)
-          storage.setItem(STORAGE_KEY, JSON.stringify(data));
+        const data: unknown = JSON.parse(raw);
+        if (!isValidDataset(data)) throw new Error('Invalid dataset');
         unreadableCurrentData = false;
         return {
           data,

@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { routePaths } from '../src/app/routes/paths';
+
 test('edit, add, switch languages, public view and reload share one dataset', async ({
   page,
 }) => {
@@ -75,7 +76,7 @@ test('corrupt storage recovers and duplicate input stays in the dialog', async (
   page,
 }) => {
   await page.addInitScript(() =>
-    localStorage.setItem('language-board.dataset.v1', '{broken'),
+    localStorage.setItem('language-board.dataset', '{broken'),
   );
   await page.goto(routePaths.management);
   await expect(page.getByRole('alert')).toContainText('starter words');
@@ -218,52 +219,14 @@ test('dynamic languages, sparse translations and language order survive reload',
   await page.getByRole('link', { name: 'Public Page' }).click();
   await expect(page.getByText('شکریہ', { exact: true })).toBeVisible();
   const stored = await page.evaluate(() =>
-    JSON.parse(localStorage.getItem('language-board.dataset.v2') ?? 'null'),
+    JSON.parse(localStorage.getItem('language-board.dataset') ?? 'null'),
   );
   expect(
     stored.languages.map((language: { code: string }) => language.code),
   ).toEqual(['ur', 'fa', 'ar', 'fr']);
-  expect(
-    stored.keywords.byId[stored.keywords.order.at(-1)].translations,
-  ).toEqual({ ur: 'شکریہ' });
-});
-
-test('legacy user edits and order migrate on first visit', async ({ page }) => {
-  await page.addInitScript(() => {
-    if (!localStorage.getItem('language-board.dataset.v2'))
-      localStorage.setItem(
-        'language-board.dataset.v1',
-        JSON.stringify({
-          version: 1,
-          keywords: [
-            {
-              id: 'custom',
-              keyword: 'Custom',
-              translations: { fa: 'سفارشی', en: 'Custom', fr: '' },
-            },
-            {
-              id: 'hello',
-              keyword: 'Hello',
-              translations: { fa: 'درود', en: 'Hello', fr: 'Bonjour' },
-            },
-          ],
-        }),
-      );
+  expect(stored.keywords[stored.order.at(-1)].translations).toEqual({
+    ur: 'شکریہ',
   });
-  await page.goto(routePaths.management);
-  await expect(page.getByRole('textbox').first()).toHaveAccessibleName(
-    'Custom translation',
-  );
-  await expect(
-    page.getByRole('textbox', { name: 'Hello translation', exact: true }),
-  ).toHaveValue('درود');
-  await page.reload();
-  await expect(page.getByRole('textbox').first()).toHaveAccessibleName(
-    'Custom translation',
-  );
-  await expect(
-    page.getByRole('textbox', { name: 'Hello translation', exact: true }),
-  ).toHaveValue('درود');
 });
 
 for (const width of [320, 768, 1440]) {

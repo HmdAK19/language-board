@@ -53,7 +53,6 @@ export const LanguageCatalog = ({
               <Button
                 variant="secondary"
                 aria-label={`Delete ${language.label}`}
-                disabled={languages.length <= 1}
                 onClick={() => onRemove(language)}
               >
                 ×

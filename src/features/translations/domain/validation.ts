@@ -31,10 +31,10 @@ export const getKeywordValidationError = (
   if (!value.trim()) return 'Enter a keyword.';
   if (value.trim().length > 80) return 'Use 80 characters or fewer.';
   if (
-    data.keywords.order.some(
+    data.order.some(
       (id) =>
         id !== excludedId &&
-        normalizeKeywordForComparison(data.keywords.byId[id].keyword) ===
+        normalizeKeywordForComparison(data.keywords[id].keyword) ===
           normalizeKeywordForComparison(value),
     )
   )
@@ -45,10 +45,9 @@ export const getKeywordValidationError = (
 export const isValidDataset = (value: unknown): value is Dataset => {
   if (
     !isObjectRecord(value) ||
-    value.version !== 2 ||
     !Array.isArray(value.languages) ||
-    !value.languages.length ||
-    !isObjectRecord(value.keywords)
+    !isObjectRecord(value.keywords) ||
+    !Array.isArray(value.order)
   )
     return false;
   const codes = new Set<string>();
@@ -66,19 +65,14 @@ export const isValidDataset = (value: unknown): value is Dataset => {
       return false;
     codes.add(language.code);
   }
-  const { order, byId } = value.keywords;
-  if (
-    !Array.isArray(order) ||
-    !isObjectRecord(byId) ||
-    order.length !== Object.keys(byId).length
-  )
-    return false;
+  const { order, keywords } = value;
+  if (order.length !== Object.keys(keywords).length) return false;
   const ids = new Set<string>();
   const names = new Set<string>();
   for (const id of order) {
-    if (!isSafeEntityId(id) || ids.has(id) || !hasOwnProperty(byId, id))
+    if (!isSafeEntityId(id) || ids.has(id) || !hasOwnProperty(keywords, id))
       return false;
-    const row = byId[id];
+    const row = keywords[id];
     if (
       !isObjectRecord(row) ||
       row.id !== id ||

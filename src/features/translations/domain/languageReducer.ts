@@ -6,7 +6,9 @@ import { getLanguageValidationError } from './validation';
 
 type LanguageAction = Extract<
   Action,
-  { type: 'addLanguage' | 'removeLanguage' | 'moveLanguage' }
+  {
+    type: 'addLanguage' | 'removeLanguage' | 'moveLanguage' | 'clearLanguages';
+  }
 >;
 
 const addLanguage = (data: Dataset, language: LanguageDefinition): Dataset => {
@@ -26,15 +28,11 @@ const addLanguage = (data: Dataset, language: LanguageDefinition): Dataset => {
 };
 
 const removeLanguage = (data: Dataset, code: string): Dataset => {
-  if (
-    data.languages.length <= 1 ||
-    !data.languages.some((language) => language.code === code)
-  )
-    return data;
+  if (!data.languages.some((language) => language.code === code)) return data;
 
-  const byId = Object.fromEntries(
-    data.keywords.order.map((id) => {
-      const keyword = data.keywords.byId[id];
+  const keywords = Object.fromEntries(
+    data.order.map((id) => {
+      const keyword = data.keywords[id];
       const translations = { ...keyword.translations };
       delete translations[code];
 
@@ -45,10 +43,19 @@ const removeLanguage = (data: Dataset, code: string): Dataset => {
   return {
     ...data,
     languages: data.languages.filter((language) => language.code !== code),
-    keywords: {
-      ...data.keywords,
-      byId,
-    },
+    keywords,
+  };
+};
+
+const clearLanguages = (data: Dataset): Dataset => {
+  if (!data.languages.length) return data;
+
+  return {
+    ...data,
+    languages: [],
+    keywords: Object.fromEntries(
+      data.order.map((id) => [id, { ...data.keywords[id], translations: {} }]),
+    ),
   };
 };
 
@@ -68,5 +75,7 @@ export const reduceLanguageAction = (
       return removeLanguage(data, action.code);
     case 'moveLanguage':
       return reorderLanguages(data, action.from, action.to);
+    case 'clearLanguages':
+      return clearLanguages(data);
   }
 };
