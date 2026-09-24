@@ -5,8 +5,9 @@ import { Button, TextField, VirtualList } from '@/shared';
 
 import { createKeywordFormSchema, type KeywordFormValues } from '../schemas';
 import type { Dataset, LanguageDefinition } from '../types';
-export type { KeywordFormValues } from '../schemas';
 import styles from './KeywordForm.module.scss';
+
+export type { KeywordFormValues } from '../schemas';
 
 interface KeywordFormProps {
   languages: LanguageDefinition[];

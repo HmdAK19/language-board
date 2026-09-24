@@ -27,6 +27,7 @@ const normalizeTranslations = (
       .map(([code, value]) => [code, (value ?? '').trim()] as const)
       .filter(([, value]) => value),
   );
+
   return Object.keys(translations).length ? translations : null;
 };
 
@@ -52,6 +53,7 @@ export const addKeyword = (
     keyword: action.keyword.trim(),
     translations,
   };
+
   return {
     ...data,
     keywords: { ...data.keywords, [keyword.id]: keyword },
@@ -75,6 +77,7 @@ export const editKeywordTranslation = (
   if ((keyword.translations[action.language] ?? '') === value) return data;
 
   const translations = { ...keyword.translations };
+
   if (value) translations[action.language] = value;
   else delete translations[action.language];
 
@@ -116,8 +119,11 @@ export const deleteKeyword = (
   action: Extract<Action, { type: 'deleteKeyword' }>,
 ): Dataset => {
   if (!hasOwnProperty(data.keywords, action.id)) return data;
+
   const keywords = { ...data.keywords };
+
   delete keywords[action.id];
+
   return {
     ...data,
     keywords,
@@ -130,6 +136,7 @@ export const reorderKeywords = (
   action: Extract<Action, { type: 'move' }>,
 ): Dataset => {
   const order = moveArrayItem(data.order, action.from, action.to);
+
   return order === data.order ? data : { ...data, order };
 };
 

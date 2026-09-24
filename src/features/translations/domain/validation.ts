@@ -50,7 +50,9 @@ export const isValidDataset = (value: unknown): value is Dataset => {
     !Array.isArray(value.order)
   )
     return false;
+
   const codes = new Set<string>();
+
   for (const language of value.languages) {
     if (
       !isObjectRecord(language) ||
@@ -63,16 +65,23 @@ export const isValidDataset = (value: unknown): value is Dataset => {
       (language.direction !== 'rtl' && language.direction !== 'ltr')
     )
       return false;
+
     codes.add(language.code);
   }
+
   const { order, keywords } = value;
+
   if (order.length !== Object.keys(keywords).length) return false;
+
   const ids = new Set<string>();
   const names = new Set<string>();
+
   for (const id of order) {
     if (!isSafeEntityId(id) || ids.has(id) || !hasOwnProperty(keywords, id))
       return false;
+
     const row = keywords[id];
+
     if (
       !isObjectRecord(row) ||
       row.id !== id ||
@@ -83,6 +92,7 @@ export const isValidDataset = (value: unknown): value is Dataset => {
       !isObjectRecord(row.translations)
     )
       return false;
+
     if (
       !Object.entries(row.translations).every(
         ([code, text]) =>
@@ -90,8 +100,10 @@ export const isValidDataset = (value: unknown): value is Dataset => {
       )
     )
       return false;
+
     ids.add(id);
     names.add(normalizeKeywordForComparison(row.keyword));
   }
+
   return true;
 };

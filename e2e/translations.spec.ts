@@ -240,9 +240,9 @@ for (const width of [320, 768, 1440]) {
     const dialog = page.getByRole('dialog');
     await expect
       .poll(() =>
-        dialog.locator(':scope > div').evaluate(
-          (content) => content.scrollHeight <= content.clientHeight,
-        ),
+        dialog
+          .locator(':scope > div')
+          .evaluate((content) => content.scrollHeight <= content.clientHeight),
       )
       .toBe(true);
     await expect(dialog.getByRole('button', { name: 'Done' })).toBeInViewport();

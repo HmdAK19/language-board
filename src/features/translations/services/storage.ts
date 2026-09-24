@@ -31,9 +31,13 @@ export const createLocalRepository = (
             warning: '',
           };
         }
+
         const data: unknown = JSON.parse(raw);
+
         if (!isValidDataset(data)) throw new Error('Invalid dataset');
+
         unreadableCurrentData = false;
+
         return {
           data,
           warning: '',
@@ -51,7 +55,9 @@ export const createLocalRepository = (
         throw new Error(
           'Existing data could not be read; it has been preserved.',
         );
+
       if (!isValidDataset(data)) throw new Error('Invalid dataset');
+
       getStorage().setItem(STORAGE_KEY, JSON.stringify(data));
     },
   };
