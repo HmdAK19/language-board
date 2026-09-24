@@ -14,6 +14,7 @@ interface KeywordRowProps {
   direction: LanguageDefinition['direction'] | undefined;
   onEdit: (value: string) => void;
   onEditTranslations: () => void;
+  onDelete: () => void;
 }
 
 export const KeywordRowContent = ({
@@ -22,6 +23,7 @@ export const KeywordRowContent = ({
   direction,
   onEdit,
   onEditTranslations,
+  onDelete,
   provided,
   snapshot,
 }: Omit<KeywordRowProps, 'index'> & {
@@ -68,6 +70,14 @@ export const KeywordRowContent = ({
         aria-label={`Edit all translations for ${item.keyword}`}
       >
         ✎
+      </button>
+      <button
+        type="button"
+        className={styles.deleteKeyword}
+        onClick={onDelete}
+        aria-label={`Delete ${item.keyword}`}
+      >
+        ×
       </button>
     </div>
   );

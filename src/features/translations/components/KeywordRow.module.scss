@@ -57,7 +57,18 @@
   font-size: 20px;
 }
 
-.editLanguages:hover { background: var(--nav-link-surface); }
+.editLanguages:hover {
+  background: var(--nav-link-surface);
+}
+
+.deleteKeyword {
+  @extend .editLanguages;
+  color: var(--missing-label);
+}
+
+.deleteKeyword:hover {
+  background: var(--missing-focus);
+}
 
 .translationInput:hover {
   border-color: var(--input-border-hover);

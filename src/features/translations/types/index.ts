@@ -35,6 +35,10 @@ export type Action =
       translations: Partial<Record<Language, string>>;
     }
   | {
+      type: 'deleteKeyword';
+      id: string;
+    }
+  | {
       type: 'add';
       id: string;
       keyword: string;

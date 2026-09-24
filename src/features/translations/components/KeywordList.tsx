@@ -8,8 +8,10 @@ import styles from './KeywordList.module.scss';
 
 export const KeywordList = ({
   onEditTranslations,
+  onDelete,
 }: {
   onEditTranslations: (id: string) => void;
+  onDelete: (id: string) => void;
 }) => {
   const { data, language, dispatch } = useTranslations();
   const direction = data.languages.find(
@@ -42,6 +44,7 @@ export const KeywordList = ({
             snapshot={snapshot}
             onEdit={() => {}}
             onEditTranslations={() => {}}
+            onDelete={() => {}}
           />
         )}
       >
@@ -66,6 +69,7 @@ export const KeywordList = ({
                   dispatch({ type: 'edit', id, language, value })
                 }
                 onEditTranslations={() => onEditTranslations(id)}
+                onDelete={() => onDelete(id)}
               />
             )}
           />

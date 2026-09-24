@@ -10,6 +10,18 @@ import {
 import { createLocalRepository } from '../features/translations/services';
 
 describe('translation domain', () => {
+  it('deletes a keyword and all of its translations', () => {
+    const original = createInitialDataset();
+    const id = original.keywords.order[0];
+    const result = datasetReducer(original, { type: 'deleteKeyword', id });
+
+    expect(result.keywords.order).not.toContain(id);
+    expect(result.keywords.byId).not.toHaveProperty(id);
+    expect(result.keywords.order).toHaveLength(
+      original.keywords.order.length - 1,
+    );
+  });
+
   it('adds one translation and leaves other languages empty', () => {
     const data = datasetReducer(createInitialDataset(), {
       type: 'add',
