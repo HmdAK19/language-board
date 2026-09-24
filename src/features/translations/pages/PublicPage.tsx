@@ -1,9 +1,12 @@
-import { PageHeading } from '@/shared';
+import { MotionSurface, PageHeading } from '@/shared';
+import { useTranslations } from '../hooks';
 
 import { LanguageSelect, TranslationList } from '../components';
 import styles from './PublicPage.module.scss';
 
 const PublicPage = () => {
+  const { language } = useTranslations();
+
   return (
     <section className={styles.publicPage} aria-labelledby="page-title">
       <PageHeading
@@ -12,7 +15,9 @@ const PublicPage = () => {
         title="Word Translations"
         actions={<LanguageSelect />}
       />
-      <TranslationList />
+      <MotionSurface motionKey={language} variant="content">
+        <TranslationList />
+      </MotionSurface>
     </section>
   );
 };

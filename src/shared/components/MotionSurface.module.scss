@@ -1,0 +1,45 @@
+.surface {
+  position: relative;
+  min-width: 0;
+  transform-origin: 50% 18%;
+}
+
+.page {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  flex-direction: column;
+}
+
+.pageAccent {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 50%;
+  width: min(180px, 34vw);
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, var(--blue), transparent);
+  opacity: 0.75;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.content {
+  isolation: isolate;
+}
+
+.languageSweep {
+  position: absolute;
+  z-index: 3;
+  inset: -8px auto -8px 0;
+  width: 38%;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    color-mix(in srgb, var(--blue) 10%, transparent),
+    transparent
+  );
+  filter: blur(2px);
+  pointer-events: none;
+}

@@ -1,5 +1,6 @@
 export {
   Button,
+  MotionSurface,
   Modal,
   PageHeading,
   TextField,

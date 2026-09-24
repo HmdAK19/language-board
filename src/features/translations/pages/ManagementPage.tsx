@@ -1,4 +1,4 @@
-import { PageHeading } from '@/shared';
+import { MotionSurface, PageHeading } from '@/shared';
 
 import {
   KeywordList,
@@ -7,10 +7,11 @@ import {
   ManagementOverview,
 } from '../components';
 import { ManagementDialogs } from './ManagementDialogs';
-import { useManagementPageActions } from '../hooks';
+import { useManagementPageActions, useTranslations } from '../hooks';
 import styles from './ManagementPage.module.scss';
 
 const ManagementPage = () => {
+  const { language } = useTranslations();
   const {
     data,
     dialog,
@@ -33,12 +34,18 @@ const ManagementPage = () => {
         className={styles.heading}
       />
       <ManagementOverview data={data} />
-      <div className={styles.managementCard}>
-        <KeywordList
-          onEditTranslations={openEditKeyword}
-          onDelete={deleteKeyword}
-        />
-      </div>
+      <MotionSurface
+        motionKey={language}
+        variant="content"
+        className={styles.contentTransition}
+      >
+        <div className={styles.managementCard}>
+          <KeywordList
+            onEditTranslations={openEditKeyword}
+            onDelete={deleteKeyword}
+          />
+        </div>
+      </MotionSurface>
       <ManagementActions
         onAddKeyword={openAddKeyword}
         onManageLanguages={openManageLanguages}
