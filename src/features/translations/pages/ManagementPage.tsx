@@ -18,6 +18,7 @@ const ManagementPage = () => {
     openAddKeyword,
     openManageLanguages,
     openEditKeyword,
+    openDatasetTransfer,
     deleteKeyword,
   } = useManagementPageActions();
 
@@ -40,6 +41,7 @@ const ManagementPage = () => {
       <ManagementActions
         onAddKeyword={openAddKeyword}
         onManageLanguages={openManageLanguages}
+        onDatasetTransfer={openDatasetTransfer}
       />
       <ManagementDialogs dialog={dialog} data={data} onClose={closeDialog} />
     </section>

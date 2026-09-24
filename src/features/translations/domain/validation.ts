@@ -61,7 +61,7 @@ export const isValidDataset = (value: unknown): value is Dataset => {
       typeof language.label !== 'string' ||
       !language.label.trim() ||
       language.label.length > 80 ||
-      !['rtl', 'ltr'].includes(String(language.direction))
+      (language.direction !== 'rtl' && language.direction !== 'ltr')
     )
       return false;
     codes.add(language.code);

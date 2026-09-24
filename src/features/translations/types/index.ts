@@ -22,6 +22,7 @@ export interface Dataset {
 }
 
 export type Action =
+  | { type: 'replaceDataset'; data: Dataset }
   | {
       type: 'edit';
       id: string;

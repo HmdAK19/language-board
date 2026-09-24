@@ -1,6 +1,7 @@
 import { AddKeywordDialog, ManageLanguagesDialog } from '../components';
-import type { Dataset } from '../types';
+import { DatasetTransferDialog } from '../components/DatasetTransferDialog';
 import type { ManagementDialog } from '../hooks';
+import type { Dataset } from '../types';
 
 interface ManagementDialogsProps {
   dialog: ManagementDialog;
@@ -14,6 +15,9 @@ export const ManagementDialogs = ({
   onClose,
 }: ManagementDialogsProps) => {
   if (!dialog) return null;
+
+  if (dialog.type === 'datasetTransfer')
+    return <DatasetTransferDialog onClose={onClose} />;
 
   if (dialog.type === 'manageLanguages')
     return <ManageLanguagesDialog onClose={onClose} />;

@@ -6,6 +6,7 @@ export type ManagementDialog =
   | { type: 'addKeyword' }
   | { type: 'editKeyword'; keywordId: string }
   | { type: 'manageLanguages' }
+  | { type: 'datasetTransfer' }
   | null;
 
 export const useManagementPageActions = () => {
@@ -21,6 +22,11 @@ export const useManagementPageActions = () => {
     () => setDialog({ type: 'manageLanguages' }),
     [],
   );
+  const openDatasetTransfer = useCallback(
+    () => setDialog({ type: 'datasetTransfer' }),
+    [],
+  );
+
   const openEditKeyword = useCallback(
     (keywordId: string) => setDialog({ type: 'editKeyword', keywordId }),
     [],
@@ -46,6 +52,7 @@ export const useManagementPageActions = () => {
     openAddKeyword,
     openManageLanguages,
     openEditKeyword,
+    openDatasetTransfer,
     deleteKeyword,
   };
 };
