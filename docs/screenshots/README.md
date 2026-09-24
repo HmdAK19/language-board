@@ -1,57 +1,53 @@
-# گالری تصاویر برنامه
+# Application Screenshot Gallery
 
-[معرفی](../../README.md) · [راهنمای کاربری](../user-guide.fa.md)
+[Project overview](../../README.md) · [User guide](../user-guide.md)
 
-این تصاویر از اجرای واقعی برنامه با دادهٔ آغازین، زبان فارسی و storage مستقل Playwright تهیه می‌شوند. تصاویر بازسازی گرافیکی نیستند و اطلاعات شخصی مرورگر را نمایش نمی‌دهند.
+These screenshots are captured from the real application using seed data, the Persian translation language, and isolated Playwright storage. They are not reconstructed mockups and do not contain personal browser information.
 
-## نمای موبایل
+## Mobile views
 
-| مدیریت، عرض 390                  | عمومی، عرض 390                  |
-| -------------------------------- | ------------------------------- |
-| ![مدیریت موبایل](manage-390.png) | ![عمومی موبایل](public-390.png) |
+| Management, 390 px                        | Public, 390 px                        |
+| ----------------------------------------- | ------------------------------------- |
+| ![Mobile management page](manage-390.png) | ![Mobile public page](public-390.png) |
 
-| افزودن واژه، عرض 390                          | مدیریت زبان، عرض 390                    |
-| --------------------------------------------- | --------------------------------------- |
-| ![افزودن واژه در موبایل](add-keyword-390.png) | ![زبان‌ها در موبایل](languages-390.png) |
+| Add keyword, 390 px                               | Manage languages, 390 px                                |
+| ------------------------------------------------- | ------------------------------------------------------- |
+| ![Mobile add-keyword dialog](add-keyword-390.png) | ![Mobile language-management dialog](languages-390.png) |
 
-## نمای دسکتاپ
+## Desktop views
 
-![مدیریت دسکتاپ](manage-1440.png)
+![Desktop management page](manage-1440.png)
 
-![عمومی دسکتاپ](public-1440.png)
+![Desktop public page](public-1440.png)
 
-![افزودن واژه با فیلد همهٔ زبان‌ها](add-keyword-1440.png)
+![Add keyword with fields for all languages](add-keyword-1440.png)
 
-![مدیریت زبان‌های موجود و افزودن زبان](languages-1440.png)
+![Manage existing languages and add another](languages-1440.png)
 
-## فایل‌های تمام اندازه‌ها
+## All captured sizes
 
-| عرض viewport | مدیریت                   | عمومی                    | افزودن واژه                   | زبان‌ها                     |
-| ------------ | ------------------------ | ------------------------ | ----------------------------- | --------------------------- |
-| 320px        | [تصویر](manage-320.png)  | [تصویر](public-320.png)  | [تصویر](add-keyword-320.png)  | [تصویر](languages-320.png)  |
-| 390px        | [تصویر](manage-390.png)  | [تصویر](public-390.png)  | [تصویر](add-keyword-390.png)  | [تصویر](languages-390.png)  |
-| 768px        | [تصویر](manage-768.png)  | [تصویر](public-768.png)  | [تصویر](add-keyword-768.png)  | [تصویر](languages-768.png)  |
-| 1024px       | [تصویر](manage-1024.png) | [تصویر](public-1024.png) | —                             | —                           |
-| 1440px       | [تصویر](manage-1440.png) | [تصویر](public-1440.png) | [تصویر](add-keyword-1440.png) | [تصویر](languages-1440.png) |
-| 1920px       | [تصویر](manage-1920.png) | [تصویر](public-1920.png) | —                             | —                           |
+| Viewport width | Management               | Public                   | Add keyword                   | Languages                   |
+| -------------- | ------------------------ | ------------------------ | ----------------------------- | --------------------------- |
+| 320 px         | [Image](manage-320.png)  | [Image](public-320.png)  | [Image](add-keyword-320.png)  | [Image](languages-320.png)  |
+| 390 px         | [Image](manage-390.png)  | [Image](public-390.png)  | [Image](add-keyword-390.png)  | [Image](languages-390.png)  |
+| 768 px         | [Image](manage-768.png)  | [Image](public-768.png)  | [Image](add-keyword-768.png)  | [Image](languages-768.png)  |
+| 1024 px        | [Image](manage-1024.png) | [Image](public-1024.png) | —                             | —                           |
+| 1440 px        | [Image](manage-1440.png) | [Image](public-1440.png) | [Image](add-keyword-1440.png) | [Image](languages-1440.png) |
+| 1920 px        | [Image](manage-1920.png) | [Image](public-1920.png) | —                             | —                           |
 
-## بازتولید
+## Reproducing screenshots
 
-```sh
-npm ci
-npx playwright install chromium
+```bash
 npm run test:docs:screenshots
 ```
 
-در Windows با Edge نصب‌شده:
+On Windows with installed Edge:
 
 ```powershell
 $env:PLAYWRIGHT_CHANNEL = 'msedge'
 npm run test:docs:screenshots
 ```
 
-Playwright سرور توسعه را راه‌اندازی می‌کند. هر اندازه context تازه دارد؛ دادهٔ شخصی دستکاری نمی‌شود. capture پس از نمایش محتوای اصلی و بارگذاری فونت‌ها انجام می‌شود. ارتفاع viewport برابر 900، reduced motion فعال و animation در capture غیرفعال است. صفحه‌ها با fullPage ثبت می‌شوند و ارتفاع فایل می‌تواند بیش از 900 باشد؛ دیالوگ‌ها فقط در viewport ثبت می‌شوند تا پس‌زمینهٔ ثابت مرورگر درست نمایش داده شود. دیالوگ بلند ممکن است ناحیهٔ داخلی قابل اسکرول داشته باشد؛ تصویر وضعیت اولیهٔ آن را ثبت می‌کند.
+Playwright starts the development server. Every viewport receives a fresh browser context, so personal data is not touched. Capture waits for main content and fonts, uses a 900-pixel viewport height, enables reduced motion, and disables animation during capture. Pages use full-page screenshots, while dialogs stay viewport-sized so their fixed backdrop renders correctly.
 
-آخرین تولید: ۲۰۲۶-۰۹-۲۴ با Edge روی Windows؛ هر ۶ سناریو موفق بود. نماهای نمونهٔ موبایل و دسکتاپ و هر دو دیالوگ به‌صورت چشمی بررسی شدند.
-
-۲۰ تصویر تولید می‌شود: ۱۲ تصویر صفحه و ۸ تصویر دیالوگ. فایل‌های PNG با اجرای مجدد بازنویسی می‌شوند. سناریو برای هر عرض، نبود overflow افقی سند را نیز بررسی می‌کند. پس از capture دست‌کم نماهای 320/390 و 1440 و هر دو دیالوگ بازبینی چشمی شوند.
+The last documented capture was generated on 2026-09-24 with Edge on Windows. All six scenarios passed and produced 20 PNG files: 12 page images and eight dialog images. Re-running the command overwrites those files. The scenarios also check for horizontal document overflow; after capture, visually inspect at least the 320/390 and 1440 pixel views and both dialogs.

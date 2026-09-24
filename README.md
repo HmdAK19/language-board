@@ -1,94 +1,153 @@
 # Language Board
 
-برنامهٔ واکنش‌گرای مدیریت واژه‌ها و ترجمه‌ها با React و TypeScript؛ شامل صفحهٔ مطالعه، ویرایش ترجمه، افزودن واژهٔ چندزبانه و مدیریت زبان‌ها. داده‌ها در مرورگر ذخیره می‌شوند و برنامه backend ندارد.
+A responsive keyword and translation workspace built with React and TypeScript. It provides a read-only translation page, inline editing, multilingual keyword creation, language management, and JSON import/export. Data is stored in the browser; the current application has no backend.
 
-## شروع سریع
+## Quick start
 
-Node.js نسخهٔ 22.12 یا بالاتر و npm لازم است (محیط بررسی: Node 22.14 روی Windows).
+Node.js 22.12 or newer and npm are required. The documented environment uses Node.js 22.14 on Windows.
 
-```sh
+```bash
 npm ci
 npm run dev
 ```
 
-صفحهٔ عمومی: <http://127.0.0.1:5173/> — مدیریت: <http://127.0.0.1:5173/manage>
+Public page: <http://127.0.0.1:5173/>
 
-مسیر `/` صفحهٔ عمومی است. مسیرهای ناشناخته، از جمله `/public` قدیمی، به `/` هدایت می‌شوند. زبان رابط انگلیسی است؛ انتخاب زبان، ترجمه‌ها و جهت متن آن‌ها را تغییر می‌دهد.
+Management page: <http://127.0.0.1:5173/manage>
 
-## پیش‌نمایش نسخهٔ فعلی
+The `/` route is the public page. Unknown routes, including the former `/public` route, redirect to `/`. The interface remains in English; selecting a language changes the displayed translations and their text direction.
 
-### مدیریت ترجمه‌ها
+## Current UI
 
-![صفحهٔ مدیریت در عرض ۱۴۴۰ پیکسل](docs/screenshots/manage-1440.png)
+### Translation management
 
-### صفحهٔ عمومی
+![Translation management at 1440 pixels](docs/screenshots/manage-1440.png)
 
-![صفحهٔ عمومی در عرض ۱۴۴۰ پیکسل](docs/screenshots/public-1440.png)
+### Public page
 
-### افزودن واژه و مدیریت زبان‌ها
+![Public translation page at 1440 pixels](docs/screenshots/public-1440.png)
 
-![فرم افزودن واژه با ترجمه‌های چندزبانه](docs/screenshots/add-keyword-1440.png)
+### Keyword and language management
 
-![دیالوگ مدیریت زبان‌ها](docs/screenshots/languages-1440.png)
+![Adding a keyword with multilingual translations](docs/screenshots/add-keyword-1440.png)
 
-برای تصاویر موبایل و تمام اندازه‌ها، [گالری و روش بازتولید تصاویر](docs/screenshots/README.md) را ببینید.
+![Language management dialog](docs/screenshots/languages-1440.png)
 
-## امکانات
+See the [screenshot gallery](docs/screenshots/README.md) for mobile layouts, all captured sizes, and reproduction instructions.
 
-- شروع با ۸ واژه و زبان‌های فارسی، عربی و فرانسوی؛ ترجمهٔ فارسی Key و Food عمداً خالی است.
-- ویرایش درجا و ذخیرهٔ خودکار ترجمه‌ها، واژه‌ها و ترتیب آن‌ها در `localStorage`.
-- افزودن واژه با فیلد جداگانه برای تمام زبان‌ها؛ حداقل یک ترجمه لازم است.
-- جابه‌جایی واژه‌ها با drag-and-drop در ماوس و صفحهٔ لمسی و نیز با صفحه‌کلید، با ترتیب مشترک در همهٔ زبان‌ها.
-- افزودن زبان با کد استاندارد، نام نمایشی و جهت متن؛ جابه‌جایی و حذف زبان همراه ترجمه‌هایش.
-- صفحهٔ عمومی فقط‌خواندنی با نمایش `No translation yet` برای ترجمهٔ خالی.
-- دیالوگ بومی، بازگرداندن فوکوس، خطاهای فرم و پشتیبانی از reduced motion.
-- اعتبارسنجی ساختار ذخیره‌شده و هشدار خطای ذخیره‌سازی.
+## Navigation and access model
 
-## انتقال داده با JSON
+The application does not currently provide authentication or role-based access control. For that reason, the public page includes a button that navigates directly to the management panel, and the management panel includes a button that returns to the public page. These controls are navigation conveniences only; they do not represent protected routes or separate user permissions.
 
-در صفحهٔ مدیریت، دکمهٔ **Import & export** را انتخاب کنید. **Download JSON** تمام زبان‌ها، کلیدواژه‌ها، ترجمه‌ها و ترتیب آن‌ها را مستقل از فیلتر جاری دانلود می‌کند. فایل خروجی قالب نسخهٔ ۲ برنامه را دارد.
+## Features
 
-برای بازیابی، فایل JSON نسخهٔ ۲ (حداکثر ۲۰ مگابایت) را انتخاب کنید. پس از اعتبارسنجی، تعداد زبان‌ها و کلیدواژه‌ها نمایش داده می‌شود. گزینهٔ تأیید جایگزینی را فعال و **Replace & import** را انتخاب کنید. ایمپورت داده‌ها را جایگزین می‌کند؛ ادغام انجام نمی‌شود. فایل نامعتبر یا لغو عملیات، دادهٔ فعلی را تغییر نمی‌دهد. می‌توانید قبل از جایگزینی، از همین دیالوگ نسخهٔ پشتیبان بگیرید.
+- Starts with eight keywords and Persian, Arabic, and French. The Persian translations for `Key` and `Food` are intentionally empty.
+- Inline translation editing with automatic persistence to `localStorage`.
+- Keyword creation with one field per language and at least one required translation.
+- Mouse, touch, and keyboard drag-and-drop with one shared order across languages.
+- Dynamic language creation using a canonical language code, display name, and text direction.
+- Language reordering and deletion, including removal of the deleted language's translations.
+- A read-only public view that shows `No translation yet` for missing translations.
+- Search and translated/missing status filters in both public and management views.
+- Native dialogs, focus restoration, accessible validation feedback, and reduced-motion support.
+- Versioned JSON backup and restore with schema validation.
+- Virtualized keyword, translation, language, and multilingual form lists.
 
-فایل‌ها در مرورگر پردازش می‌شوند و به سروری ارسال نمی‌شوند. اگر ذخیره‌سازی مرورگر در دسترس نباشد، دادهٔ واردشده فقط در همان نشست باقی می‌ماند و پیام مربوط نمایش داده می‌شود.
+## JSON import and export
 
-## راهنمای مستندات
+Open **Import & export** on the management page. **Download JSON** exports every language, keyword, translation, and ordering value, regardless of the active filters. The exported file uses dataset format version 2.
 
-| سند                                            | محتوا                                    |
-| ---------------------------------------------- | ---------------------------------------- |
-| [راهنمای کاربری](docs/user-guide.fa.md)        | گردش کار، ورودی‌ها، زبان‌ها و رفع اشکال  |
-| [معماری و توسعه](docs/architecture.fa.md)      | ساختار پوشه‌ها، جریان داده و توسعه‌پذیری |
-| [مدل داده و ذخیره‌سازی](docs/data-model.fa.md) | schema، reducer، اعتبارسنجی و بازیابی    |
-| [کامپوننت‌ها](docs/components.fa.md)           | مسئولیت اجزا و قراردادهای فرم و Context  |
-| [استایل‌ها](docs/styles.fa.md)                 | CSS Modules، توکن‌ها و breakpointها      |
-| [آزمون و استقرار](docs/testing.fa.md)          | دستورات، نتایج بررسی و میزبانی           |
-| [تصاویر](docs/screenshots/README.md)           | گالری دسکتاپ/موبایل و ثبت مجدد تصاویر    |
+To restore data, select a version 2 JSON file no larger than 20 MB. After validation, the dialog shows its language and keyword counts. Enable the replacement confirmation and select **Replace & import**. Import replaces the complete dataset; it does not merge records. Invalid files and cancelled operations leave the current dataset unchanged.
 
-## دستورات پروژه
+Files are processed entirely in the browser and are not uploaded. If browser storage is unavailable, imported data remains available only for the current session and the application displays a warning.
 
-| دستور                           | کاربرد                                     |
-| ------------------------------- | ------------------------------------------ |
-| `npm run dev`                   | سرور توسعه روی loopback                    |
-| `npm run build`                 | بررسی TypeScript و خروجی Vite در dist      |
-| `npm run preview`               | مشاهدهٔ خروجی build، معمولاً روی پورت 4173 |
-| `npm run lint`                  | ESLint                                     |
-| `npm test`                      | آزمون‌های واحد دامنه و مخزن                |
-| `npm run test:e2e`              | مجموعهٔ آزمون‌های Playwright               |
-| `npm run test:docs:screenshots` | تولید مجدد تصاویر مستندات                  |
-| `npm run format:check`          | بررسی قالب‌بندی                            |
-| `npm run format`                | قالب‌بندی فایل‌های پروژه                   |
+## Design and scaling questions
 
-برای Playwright ابتدا `npx playwright install chromium` را اجرا کنید. در Windows می‌توان از Edge نصب‌شده استفاده کرد:
+### 1. Why did you choose this data structure for keywords and translations, and how does it hold up when a new language is added?
+
+The dataset uses a normalized structure:
+
+```ts
+{
+  languages: LanguageDefinition[];
+  keywords: Record<string, Keyword>;
+  order: string[];
+}
+```
+
+Each keyword has a stable ID and stores translations in a sparse map:
+
+```ts
+translations: Partial<Record<Language, string>>;
+```
+
+`keywords[id]` provides direct lookup, while the separate `order` array allows reordering without changing keyword identity or moving complete records. This is useful for editing, deletion, drag-and-drop, and stable React keys.
+
+The translation map contains only translations that exist. Adding a language therefore appends one definition to `languages`; it does not rewrite every keyword or create empty translation fields. Existing keywords simply return an empty value until a translation is entered. Adding a language is approximately `O(L)` because the language list is validated and copied, rather than `O(K × L)`. Deleting a language is `O(K)` because that language's translation must be removed from every keyword.
+
+### 2. How would you scale this application to thousands of keywords and many languages? What would become the first bottleneck?
+
+The interface already virtualizes long lists, so it creates DOM nodes only for visible rows. Rendering thousands of list items is therefore unlikely to be the first bottleneck.
+
+The first bottleneck would most likely be persistence and global state updates. Every input change currently copies the `keywords` object, updates the shared Context, validates the complete dataset, serializes all data with `JSON.stringify`, and synchronously writes the result to `localStorage`. With thousands of keywords and many populated translations, this work can block the main thread and eventually reach browser storage limits.
+
+For a larger system, the next steps would be:
+
+- Store languages, keywords, and translations in separate backend database tables.
+- Load keywords using cursor-based pagination instead of loading the complete dataset.
+- Persist only the changed translation, with debounced or blur-triggered writes and optimistic UI updates.
+- Index normalized keyword text and `(keywordId, languageCode)` in the database.
+- Move large-scale search and filtering to the server.
+- Split the Context or use selector-based subscriptions so unrelated components do not update after every edit.
+- Retain list virtualization.
+- For an offline-only application, replace `localStorage` with IndexedDB and move expensive processing to a Web Worker.
+
+Search is a secondary bottleneck because the current filter scans and normalizes every keyword whenever the query changes. Cached normalized text, a client-side search index, or server-side search would address it.
+
+In short, the sparse translation model handles new languages well, but full-dataset synchronous validation, serialization, and persistence are the first serious scaling limits.
+
+## Documentation
+
+| Document                                  | Contents                                                              |
+| ----------------------------------------- | --------------------------------------------------------------------- |
+| [User guide](docs/user-guide.md)          | Workflows, input rules, language management, and troubleshooting      |
+| [Architecture](docs/architecture.md)      | Project structure, state flow, design decisions, and extension points |
+| [Data model](docs/data-model.md)          | Dataset schema, reducer operations, validation, and persistence       |
+| [Components](docs/components.md)          | Component responsibilities, forms, Context, and boundaries            |
+| [Styles](docs/styles.md)                  | CSS Modules, tokens, responsive breakpoints, and conventions          |
+| [Testing and deployment](docs/testing.md) | Commands, verification results, hosting, and maintenance              |
+| [Virtualization](docs/virtualization.md)  | Virtual-list behavior and test coverage                               |
+| [Screenshots](docs/screenshots/README.md) | Desktop/mobile gallery and capture instructions                       |
+
+## Project commands
+
+| Command                         | Purpose                                             |
+| ------------------------------- | --------------------------------------------------- |
+| `npm run dev`                   | Start the loopback development server               |
+| `npm run build`                 | Type-check and create the Vite production build     |
+| `npm run preview`               | Preview the production build, normally on port 4173 |
+| `npm run lint`                  | Run ESLint                                          |
+| `npm test`                      | Run domain and repository unit tests                |
+| `npm run test:e2e`              | Run the Playwright suite                            |
+| `npm run test:docs:screenshots` | Regenerate tracked documentation screenshots        |
+| `npm run format:check`          | Check formatting                                    |
+| `npm run format`                | Format project files                                |
+
+Install Chromium before running Playwright:
+
+```bash
+npx playwright install chromium
+```
+
+On Windows, the installed Edge browser can be used instead:
 
 ```powershell
 $env:PLAYWRIGHT_CHANNEL = 'msedge'
-npm run test:docs:screenshots
+npm run test:e2e
 ```
 
-## فناوری و محدوده
+## Technology and scope
 
-React 19، TypeScript، Vite، React Router، Context و reducer، Sass، React Hook Form، Yup و `@hello-pangea/dnd`؛ آزمون‌ها با Vitest و Playwright. نسخه‌های دقیق نصب در `package-lock.json` ثبت شده‌اند. فونت‌های Inter و Vazirmatn به‌صورت محلی bundle می‌شوند.
+The project uses React 19, TypeScript, Vite, React Router, Context and reducers, Sass, React Hook Form, Yup, TanStack Virtual, and `@hello-pangea/dnd`. Vitest and Playwright provide automated coverage. Exact dependency versions are recorded in `package-lock.json`; Inter and Vazirmatn are bundled locally.
 
-«Public» به معنی نمایش فقط‌خواندنی همان دادهٔ محلی است؛ ورود کاربر، سطح دسترسی، انتشار روی سرور یا همگام‌سازی بین دستگاه‌ها وجود ندارد. انتخاب زبان در جابه‌جایی داخلی صفحه‌ها حفظ می‌شود؛ پس از reload زبان اول فهرست انتخاب می‌شود. چند تب snapshot مستقل دارند و آخرین ذخیره برنده است.
-
-جست‌وجو، فیلتر وضعیت ترجمه، حذف و ویرایش واژه و انتقال JSON در رابط مدیریت در دسترس‌اند.
+“Public” means a read-only presentation of the same local browser dataset. The application has no authentication, server publishing, cross-device synchronization, or multi-user permissions. The active language survives in-app navigation but resets to the first configured language after reload. Multiple tabs hold independent snapshots, and the last write wins.
