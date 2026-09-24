@@ -1,14 +1,17 @@
 export type Language = string;
+
 export interface LanguageDefinition {
   code: Language;
   label: string;
   direction: 'rtl' | 'ltr';
 }
+
 export interface Keyword {
   id: string;
   keyword: string;
   translations: Partial<Record<Language, string>>;
 }
+
 export interface Dataset {
   version: 2;
   languages: LanguageDefinition[];
@@ -17,12 +20,19 @@ export interface Dataset {
     byId: Record<string, Keyword>;
   };
 }
+
 export type Action =
   | {
       type: 'edit';
       id: string;
       language: Language;
       value: string;
+    }
+  | {
+      type: 'updateKeyword';
+      id: string;
+      keyword: string;
+      translations: Partial<Record<Language, string>>;
     }
   | {
       type: 'add';

@@ -26,14 +26,16 @@ export const getLanguageValidationError = (
 export const getKeywordValidationError = (
   value: string,
   data: Dataset,
+  excludedId?: string,
 ): string | null => {
   if (!value.trim()) return 'Enter a keyword.';
   if (value.trim().length > 80) return 'Use 80 characters or fewer.';
   if (
     data.keywords.order.some(
       (id) =>
+        id !== excludedId &&
         normalizeKeywordForComparison(data.keywords.byId[id].keyword) ===
-        normalizeKeywordForComparison(value),
+          normalizeKeywordForComparison(value),
     )
   )
     return 'This keyword already exists.';

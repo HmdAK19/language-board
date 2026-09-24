@@ -3,7 +3,10 @@ import type { Action, Dataset, Keyword, Language } from '../types';
 import { hasOwnProperty, isSafeEntityId, moveArrayItem } from './helpers';
 import { getKeywordValidationError } from './validation';
 
-type KeywordAction = Extract<Action, { type: 'add' | 'edit' | 'move' }>;
+type KeywordAction = Extract<
+  Action,
+  { type: 'add' | 'edit' | 'updateKeyword' | 'move' }
+>;
 
 const hasLanguage = (data: Dataset, code: string): boolean =>
   data.languages.some((language) => language.code === code);
@@ -116,6 +119,43 @@ const reorderKeywords = (data: Dataset, from: number, to: number): Dataset => {
   };
 };
 
+const updateKeyword = (
+  data: Dataset,
+  action: Extract<Action, { type: 'updateKeyword' }>,
+): Dataset => {
+  const current = data.keywords.byId[action.id];
+  if (!current || getKeywordValidationError(action.keyword, data, action.id))
+    return data;
+
+  const translations = Object.fromEntries(
+    Object.entries(action.translations)
+      .filter(
+        ([code, value]) =>
+          hasLanguage(data, code) &&
+          typeof value === 'string' &&
+          value.trim() &&
+          value.length <= 500,
+      )
+      .map(([code, value]) => [code, value.trim()]),
+  );
+  if (!Object.keys(translations).length) return data;
+
+  return {
+    ...data,
+    keywords: {
+      ...data.keywords,
+      byId: {
+        ...data.keywords.byId,
+        [action.id]: {
+          ...current,
+          keyword: action.keyword.trim(),
+          translations,
+        },
+      },
+    },
+  };
+};
+
 export const reduceKeywordAction = (
   data: Dataset,
   action: KeywordAction,
@@ -125,6 +165,8 @@ export const reduceKeywordAction = (
       return addKeyword(data, action);
     case 'edit':
       return editKeywordTranslation(data, action);
+    case 'updateKeyword':
+      return updateKeyword(data, action);
     case 'move':
       return reorderKeywords(data, action.from, action.to);
   }

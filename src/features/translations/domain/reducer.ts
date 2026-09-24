@@ -11,6 +11,7 @@ export const datasetReducer = (data: Dataset, action: Action): Dataset => {
       return reduceLanguageAction(data, action);
     case 'add':
     case 'edit':
+    case 'updateKeyword':
     case 'move':
       return reduceKeywordAction(data, action);
   }
