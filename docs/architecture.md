@@ -33,7 +33,7 @@ src/
 e2e/              browser tests and screenshot generation
 ```
 
-The `@` alias points to `src`. Barrel `index.ts` files define each area's public exports. Pages are loaded with `React.lazy`, so management-only code and drag-and-drop dependencies are not included in the initial public-page chunk.
+The `@` alias points to `src`. Barrel `index.ts` files define each area's public API for consumers outside that area. Route components intentionally use direct imports for their feature components: this keeps the dependency graph explicit at lazy-route boundaries and prevents management-only code, including drag-and-drop, from being promoted into a chunk required by the public page.
 
 ## State flow
 
@@ -45,7 +45,7 @@ UI -> dispatch(Action) -> datasetReducer -> new Dataset
                               DatasetRepository.save -> localStorage
 ```
 
-The provider loads initial data once and initializes `useReducer`. It exposes the dataset, active language, dispatch function, save state, and warnings through Context. An effect persists each dataset change. Changing only the active language does not modify the dataset. The repository is injectable, so views do not access `localStorage` directly and tests can provide an alternative implementation.
+The provider loads initial data once and initializes `useReducer`. It exposes the dataset, active language, dispatch function, save state, and warnings through Context. Persistence follows a deferred copy of the dataset so urgent input rendering completes before full validation, serialization, and the synchronous `localStorage` write. Rapid edits can therefore be coalesced by React. A `pagehide` handler flushes the latest in-memory dataset before the page is discarded. Changing only the active language does not modify the dataset. The repository is injectable, so views do not access `localStorage` directly and tests can provide an alternative implementation.
 
 `datasetReducer` delegates keyword and language actions to focused reducers. Reducers are immutable and reject invalid operations by returning the previous state. Yup provides form-level feedback, while domain validation protects state and persistence boundaries.
 
@@ -59,6 +59,10 @@ Keywords are stored in the `keywords` map, while `order` stores display order. S
 
 Context is simple and appropriate for the current application size. When the provider value changes, however, all consumers are notified. A map does not make every keyword operation constant-time: object copying, uniqueness checks, complete validation, searching, and serialization still grow with the dataset.
 
+Visible keyword rows and public translation cards are memoized. Their parents pass stable callbacks and derived language direction explicitly, so unchanged rows do not subscribe to Context or rerender when another keyword is edited. This optimization is deliberately limited to repeated list items rather than applied indiscriminately across the component tree.
+
+The unfiltered keyword path returns the existing `order` array directly. It does not scan records or normalize Unicode text until a search term or translation-status filter requires that work.
+
 ## Extending the application
 
 - For a domain feature, add or update its action, reducer, validation, and unit tests before connecting the UI.
@@ -69,6 +73,6 @@ Context is simple and appropriate for the current application size. When the pro
 
 ## Larger scale
 
-For thousands of keywords, measure typing latency, persistence time, search time, and rendering separately. The current full-dataset validation and synchronous JSON write after every edit are the most immediate risks. Virtualized lists are already in place; likely next steps are selector-based subscriptions, incremental persistence, IndexedDB for an offline version, or a paginated API and indexed database for a networked version.
+For thousands of keywords, measure typing latency, persistence time, search time, and rendering separately. Virtualization, memoized repeated items, an `O(1)` unfiltered path, and deferred persistence reduce the current hot-path cost. Full-dataset validation, serialization, and synchronous `localStorage` writing still scale with dataset size even though they no longer run in the urgent render path. Likely next steps are selector-based subscriptions, incremental persistence, IndexedDB for an offline version, or a paginated API and indexed database for a networked version.
 
-Debounced persistence also needs explicit pending, flush, failure, and recovery behavior. Multi-user collaboration additionally requires authentication, authorization, conflict versioning, and server-side concurrency rules; none are implemented in the current version.
+Any future debounced or asynchronous persistence strategy also needs explicit pending, flush, failure, and recovery behavior. Multi-user collaboration additionally requires authentication, authorization, conflict versioning, and server-side concurrency rules; none are implemented in the current version.

@@ -20,6 +20,8 @@ export const filterKeywords = (
 ): string[] => {
   const terms = normalizeSearch(query).split(/\s+/).filter(Boolean);
 
+  if (status === 'all' && terms.length === 0) return data.order;
+
   return data.order.filter((id) => {
     const item = data.keywords[id];
     const translation = item.translations[language] ?? '';
@@ -27,6 +29,8 @@ export const filterKeywords = (
 
     if (status === 'translated' && !translated) return false;
     if (status === 'missing' && translated) return false;
+
+    if (terms.length === 0) return true;
 
     const text = normalizeSearch(`${item.keyword} ${translation}`);
 

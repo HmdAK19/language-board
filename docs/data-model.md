@@ -51,7 +51,7 @@ load(): { data: Dataset; warning: string };
 save(data: Dataset): void;
 ```
 
-The `localStorage` key is `language-board.dataset`. If no saved value exists, the seed dataset is created and saved. After each dataset change, the provider validates and serializes the complete dataset.
+The `localStorage` key is `language-board.dataset`. If no saved value exists, the seed dataset is created and saved. After a dataset change, React exposes a deferred version to the persistence effect. This lets urgent input rendering complete and can coalesce rapid edits before the repository validates, serializes, and writes the complete dataset. The latest state is flushed on `pagehide` so a pending deferred write is not lost when the page is discarded.
 
 If stored JSON cannot be parsed or validated, the application displays seed data and a warning. The unreadable value is preserved rather than overwritten automatically. This gives the user an opportunity to recover it manually. If a later write fails because storage is unavailable or full, changes remain in memory for the current session and a warning is shown.
 
@@ -66,3 +66,5 @@ Import is an atomic replacement. Validation completes before dispatch, and inval
 ## Complexity notes
 
 Direct keyword lookup is `O(1)` on average, while uniqueness checks, deletion from order, language removal, validation, filtering, and serialization require traversal. Sparse translation maps avoid allocating `K × L` empty values, but a fully translated dataset naturally grows toward that size.
+
+Filtering has a constant-time fast path when the query is blank and status is `all`: it returns the existing `order` reference without scanning or normalizing keyword text. Status filters still scan the ordered IDs, and text search additionally performs Unicode normalization for candidate records.

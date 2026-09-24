@@ -26,7 +26,7 @@ describe('keyword filtering', () => {
     ]);
     expect(filterKeywords(data, 'fa', 'food', 'translated')).toEqual([]);
     expect(filterKeywords(data, 'fr', '', 'missing')).toEqual([]);
-    expect(filterKeywords(data, 'fa', '   ', 'all')).toEqual(data.order);
+    expect(filterKeywords(data, 'fa', '   ', 'all')).toBe(data.order);
 
     expect(data.order).toHaveLength(8);
   });

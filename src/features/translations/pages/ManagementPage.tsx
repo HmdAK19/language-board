@@ -1,11 +1,9 @@
 import { MotionSurface, PageHeading } from '@/shared';
 
-import {
-  KeywordList,
-  LanguageSelect,
-  ManagementActions,
-  ManagementOverview,
-} from '../components';
+import { KeywordList } from '../components/keywords/KeywordList';
+import { LanguageSelect } from '../components/languages/LanguageSelect';
+import { ManagementActions } from '../components/management/ManagementActions';
+import { ManagementOverview } from '../components/management/ManagementOverview';
 import { ManagementDialogs } from './ManagementDialogs';
 import { useManagementPageActions, useTranslations } from '../hooks';
 import styles from './ManagementPage.module.scss';

@@ -1,38 +1,32 @@
-import { useTranslations } from '../../hooks';
-import { type Language } from '../../types';
+import { memo } from 'react';
+import { type Language, type LanguageDefinition } from '../../types';
 import styles from './TranslationCard.module.scss';
 
 interface TranslationCardProps {
   keyword: string;
   value: string;
   language: Language;
+  direction: LanguageDefinition['direction'] | undefined;
 }
 
-export const TranslationCard = ({
-  keyword,
-  value,
-  language,
-}: TranslationCardProps) => {
-  const { data } = useTranslations();
+export const TranslationCard = memo(
+  ({ keyword, value, language, direction }: TranslationCardProps) => {
+    return (
+      <li className={styles.wordCard}>
+        <article>
+          <h2>{keyword.toLocaleLowerCase()}</h2>
 
-  return (
-    <li className={styles.wordCard}>
-      <article>
-        <h2>{keyword.toLocaleLowerCase()}</h2>
+          {value.trim() ? (
+            <p lang={language} dir={direction}>
+              {value}
+            </p>
+          ) : (
+            <p className={styles.missingTranslation}>No translation yet</p>
+          )}
+        </article>
+      </li>
+    );
+  },
+);
 
-        {value.trim() ? (
-          <p
-            lang={language}
-            dir={
-              data.languages.find((item) => item.code === language)?.direction
-            }
-          >
-            {value}
-          </p>
-        ) : (
-          <p className={styles.missingTranslation}>No translation yet</p>
-        )}
-      </article>
-    </li>
-  );
-};
+TranslationCard.displayName = 'TranslationCard';

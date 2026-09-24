@@ -89,7 +89,7 @@ The translation map contains only translations that exist. Adding a language the
 
 The interface already virtualizes long lists, so it creates DOM nodes only for visible rows. Rendering thousands of list items is therefore unlikely to be the first bottleneck.
 
-The first bottleneck would most likely be persistence and global state updates. Every input change currently copies the `keywords` object, updates the shared Context, validates the complete dataset, serializes all data with `JSON.stringify`, and synchronously writes the result to `localStorage`. With thousands of keywords and many populated translations, this work can block the main thread and eventually reach browser storage limits.
+The first bottleneck would most likely be persistence and global state updates. Every input change still copies the `keywords` object and updates shared Context, but repeated rows/cards are memoized and persistence follows a deferred dataset so urgent input rendering is not blocked by validation, `JSON.stringify`, and the synchronous `localStorage` write. The latest pending state is flushed when the page is discarded. With thousands of keywords and many populated translations, complete-dataset processing can still consume main-thread time and eventually reach browser storage limits.
 
 For a larger system, the next steps would be:
 
@@ -102,9 +102,9 @@ For a larger system, the next steps would be:
 - Retain list virtualization.
 - For an offline-only application, replace `localStorage` with IndexedDB and move expensive processing to a Web Worker.
 
-Search is a secondary bottleneck because the current filter scans and normalizes every keyword whenever the query changes. Cached normalized text, a client-side search index, or server-side search would address it.
+Search is a secondary bottleneck. A blank query with the `all` status now returns the existing ordered IDs in `O(1)`, and status-only filtering avoids text normalization. Active text search still scans and normalizes candidate keywords; cached normalized text, a client-side search index, or server-side search would address larger datasets.
 
-In short, the sparse translation model handles new languages well, but full-dataset synchronous validation, serialization, and persistence are the first serious scaling limits.
+In short, the sparse translation model and current render optimizations handle the existing workload well, but full-dataset validation, serialization, and persistence remain the first serious scaling limits.
 
 ## Documentation
 

@@ -3,6 +3,7 @@ import {
   type DraggableProvided,
   type DraggableStateSnapshot,
 } from '@hello-pangea/dnd';
+import { memo } from 'react';
 
 import {
   type Keyword,
@@ -18,9 +19,9 @@ interface KeywordRowProps {
   isDragDisabled?: boolean;
   language: Language;
   direction: LanguageDefinition['direction'] | undefined;
-  onEdit: (value: string) => void;
-  onEditTranslations: () => void;
-  onDelete: () => void;
+  onEdit: (id: string, value: string) => void;
+  onEditTranslations: (id: string) => void;
+  onDelete: (id: string) => void;
 }
 
 export const KeywordRowContent = ({
@@ -69,12 +70,12 @@ export const KeywordRowContent = ({
         placeholder="·····"
         lang={language}
         dir={direction}
-        onChange={(event) => onEdit(event.target.value)}
+        onChange={(event) => onEdit(item.id, event.target.value)}
       />
       <button
         type="button"
         className={styles.editLanguages}
-        onClick={onEditTranslations}
+        onClick={() => onEditTranslations(item.id)}
         aria-label={`Edit all translations for ${item.keyword}`}
         title={`Edit all translations for ${item.keyword}`}
       >
@@ -83,7 +84,7 @@ export const KeywordRowContent = ({
       <button
         type="button"
         className={styles.deleteKeyword}
-        onClick={onDelete}
+        onClick={() => onDelete(item.id)}
         aria-label={`Delete ${item.keyword}`}
         title={`Delete ${item.keyword}`}
       >
@@ -93,7 +94,7 @@ export const KeywordRowContent = ({
   );
 };
 
-export const KeywordRow = (props: KeywordRowProps) => (
+export const KeywordRow = memo((props: KeywordRowProps) => (
   <Draggable
     draggableId={props.item.id}
     index={props.index}
@@ -104,4 +105,6 @@ export const KeywordRow = (props: KeywordRowProps) => (
       <KeywordRowContent {...props} provided={provided} snapshot={snapshot} />
     )}
   </Draggable>
-);
+));
+
+KeywordRow.displayName = 'KeywordRow';

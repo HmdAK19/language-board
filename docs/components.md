@@ -36,7 +36,7 @@
 | `KeywordFilters`   | Search and translation-status filtering without mutating stored order                 |
 | `ActionIcon`       | Shared feature-level icons for edit, delete, and reorder controls                     |
 
-Rows receive language direction from their parent rather than reading Context independently. This reduces Context subscriptions in large virtual lists.
+Rows and translation cards receive language direction from their parent rather than reading Context independently. Repeated items are memoized, and keyword rows receive stable ID-based callbacks. Editing one translation therefore avoids rerendering unchanged visible items in the virtual list.
 
 ## Forms
 
@@ -52,6 +52,8 @@ Export, import, summary, and section-heading components are separated under `dat
 
 ## Development rules
 
-Shared code must not depend on feature or storage modules. State operations belong in `domain`, form shape and messages belong in `schemas`, and persistence belongs behind `services`. Feature-specific styles live beside their owner as `.module.scss` files. Public imports are maintained through each area's `index.ts`.
+Shared code must not depend on feature or storage modules. State operations belong in `domain`, form shape and messages belong in `schemas`, and persistence belongs behind `services`. Feature-specific styles live beside their owner as `.module.scss` files.
 
-Add memoization or split Context only after measurement identifies a real update problem; both techniques create maintenance costs and should have a specific performance goal.
+Barrel `index.ts` files define stable public APIs across feature or application boundaries. Code inside the translation feature may use direct component imports at lazy-route boundaries. This intentional exception prevents unrelated management dependencies from entering the public-page chunk and makes route-level code splitting visible in the source.
+
+Add further memoization or split Context only after measurement identifies a real update problem; both techniques create maintenance costs and should have a specific performance goal. The current row/card memoization targets measured high-frequency list updates only.

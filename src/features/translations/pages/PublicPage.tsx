@@ -1,7 +1,8 @@
 import { MotionSurface, PageHeading } from '@/shared';
 import { useTranslations } from '../hooks';
 
-import { LanguageSelect, TranslationList } from '../components';
+import { LanguageSelect } from '../components/languages/LanguageSelect';
+import { TranslationList } from '../components/translations/TranslationList';
 import styles from './PublicPage.module.scss';
 
 const PublicPage = () => {

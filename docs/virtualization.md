@@ -13,4 +13,4 @@ Five extra rows are rendered on each side of the viewport. The focused item stay
 
 `e2e/virtualization.spec.ts` covers bounded rendering and end-of-list access with 2,000 keywords on mobile and desktop, form value retention with 150 languages, and keyboard dragging across virtual viewports. Existing translation tests also cover pointer dragging, validation, persistence and responsive layouts.
 
-Keyword rows receive language direction from their parent instead of reading translation context independently. All functions in these additions use arrow syntax.
+Keyword rows and translation cards receive language direction from their parent instead of reading translation context independently. Both repeated item types are memoized; keyword actions use stable ID-based callbacks so editing one record does not invalidate every visible row. All functions in these additions use arrow syntax.

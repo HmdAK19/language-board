@@ -5,7 +5,7 @@ import {
   useMouseSensor,
   type Sensor,
 } from '@hello-pangea/dnd';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { useTranslations } from '../../hooks';
 import { VirtualList } from '@/shared';
@@ -34,6 +34,11 @@ export const KeywordList = ({
     (item) => item.code === language,
   )?.direction;
   const [draggedId, setDraggedId] = useState<string | null>(null);
+  const editTranslation = useCallback(
+    (id: string, value: string) =>
+      dispatch({ type: 'edit', id, language, value }),
+    [dispatch, language],
+  );
 
   return (
     <>
@@ -96,11 +101,9 @@ export const KeywordList = ({
                   isDragDisabled={filters.active}
                   language={language}
                   direction={direction}
-                  onEdit={(value) =>
-                    dispatch({ type: 'edit', id, language, value })
-                  }
-                  onEditTranslations={() => onEditTranslations(id)}
-                  onDelete={() => onDelete(id)}
+                  onEdit={editTranslation}
+                  onEditTranslations={onEditTranslations}
+                  onDelete={onDelete}
                 />
               )}
             />

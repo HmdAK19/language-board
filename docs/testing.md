@@ -39,6 +39,8 @@ npm run test:e2e
 
 Unit tests cover domain actions, sparse translations, validation, persistence failure recovery, language management, filtering normalization, and versioned dataset transfer.
 
+The filtering suite also asserts referential equality for the blank-query/`all` fast path, protecting the `O(1)` behavior used by virtual lists.
+
 End-to-end tests cover:
 
 - Inline editing, keyword creation, multilingual editing, deletion, and reload persistence.
@@ -51,7 +53,7 @@ End-to-end tests cover:
 - Bounded rendering with 2,000 keywords and 150 languages.
 - Dynamic-height virtual rows, scroll retention, and virtualized form value retention.
 
-The last documented full run was performed on 2026-09-24 using Windows, Node.js 22.14, and Edge through Playwright. At that point the build, lint, formatting check, 19 unit tests, and 47 end-to-end tests all passed; screenshot generation produced 20 images across six scenarios. These counts describe that verified revision and should be updated when the suite changes.
+The last documented full run was performed on 2026-09-24 using Windows, Node.js 22.14, and installed Chrome through Playwright. At that point the build, lint, 19 unit tests, and 47 end-to-end tests all passed. The large-list scenarios covered 2,000 keywords and 150 languages. The public route's shared JavaScript chunk decreased from 21.75 KB to 10.15 KB gzip after replacing route-level barrel imports with direct feature-component imports. Screenshot generation was not rerun because these changes did not alter layout. These counts and measurements describe that verified revision and should be updated when the suite changes.
 
 ## Hosting
 

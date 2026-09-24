@@ -14,6 +14,9 @@ export const TranslationList = () => {
   const filters = useKeywordFilters();
   const container = useRef<HTMLDivElement>(null);
   const columns = useTranslationColumns(container);
+  const direction = data.languages.find(
+    (item) => item.code === language,
+  )?.direction;
 
   const rows = useMemo(() => {
     const result: string[][] = [];
@@ -48,6 +51,7 @@ export const TranslationList = () => {
                 keyword={data.keywords[id].keyword}
                 value={data.keywords[id].translations[language] ?? ''}
                 language={language}
+                direction={direction}
               />
             ))}
           </ul>
