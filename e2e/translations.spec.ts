@@ -237,6 +237,18 @@ for (const width of [320, 768, 1440]) {
       .getByRole('button', { name: 'Manage languages', exact: true })
       .click();
     await expect(page.getByLabel('Language code')).toBeFocused();
+    const dialog = page.getByRole('dialog');
+    await expect
+      .poll(() =>
+        dialog.locator(':scope > div').evaluate(
+          (content) => content.scrollHeight <= content.clientHeight,
+        ),
+      )
+      .toBe(true);
+    await expect(dialog.getByRole('button', { name: 'Done' })).toBeInViewport();
+    await expect(
+      dialog.getByRole('button', { name: 'Add language' }),
+    ).toBeInViewport();
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth,

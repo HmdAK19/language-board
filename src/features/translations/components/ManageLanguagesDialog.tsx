@@ -5,6 +5,7 @@ import { useTranslations } from '../hooks';
 import type { LanguageDefinition } from '../types';
 import { AddLanguageForm } from './AddLanguageForm';
 import { LanguageCatalog } from './LanguageCatalog';
+import styles from './ManageLanguagesDialog.module.scss';
 
 export const ManageLanguagesDialog = ({ onClose }: { onClose: () => void }) => {
   const {
@@ -74,6 +75,7 @@ export const ManageLanguagesDialog = ({ onClose }: { onClose: () => void }) => {
         onRemove={removeLanguage}
       />
       <Button
+        className={styles.deleteAllButton}
         variant="secondary"
         disabled={!data.languages.length}
         onClick={clearLanguages}

@@ -41,10 +41,7 @@ test('JSON export includes all data and can be restored after replacement', asyn
   ).toBeDisabled();
   await page.getByRole('checkbox').check();
   await page.getByRole('button', { name: 'Replace & import' }).click();
-  await expect(
-    page.getByText('Workspace imported and saved in this browser.'),
-  ).toBeVisible();
-  await page.getByRole('button', { name: 'Done', exact: true }).click();
+  await expect(page.getByRole('dialog')).toHaveCount(0);
   await page.getByRole('button', { name: 'Clear filters' }).click();
 
   await expect(
@@ -61,7 +58,7 @@ test('JSON export includes all data and can be restored after replacement', asyn
   await page.getByLabel('Choose JSON file').setInputFiles(path);
   await page.getByRole('checkbox').check();
   await page.getByRole('button', { name: 'Replace & import' }).click();
-  await page.getByRole('button', { name: 'Done', exact: true }).click();
+  await expect(page.getByRole('dialog')).toHaveCount(0);
 
   await expect(page.getByRole('status')).toHaveText('8 of 8 keywords');
   await expect(
@@ -119,10 +116,6 @@ for (const width of [320, 768, 1024, 1440]) {
 
     await page.getByRole('checkbox').check();
     await page.getByRole('button', { name: 'Replace & import' }).click();
-    await expect(
-      page.getByText('Workspace imported and saved in this browser.'),
-    ).toBeVisible();
-    await page.keyboard.press('Escape');
     await expect(dialog).toHaveCount(0);
   });
 }
@@ -169,12 +162,7 @@ test('import remains usable and reports unavailable browser storage', async ({
   await page.getByLabel('Choose JSON file').setInputFiles(upload);
   await page.getByRole('checkbox').check();
   await page.getByRole('button', { name: 'Replace & import' }).click();
-  await expect(
-    page.getByText(
-      'Workspace imported for this session. Browser storage is unavailable; export a backup before closing.',
-    ),
-  ).toBeVisible();
-  await page.getByRole('button', { name: 'Done', exact: true }).click();
+  await expect(page.getByRole('dialog')).toHaveCount(0);
   await expect(
     page.getByRole('textbox', { name: 'Welcome translation' }),
   ).toHaveValue('Willkommen');

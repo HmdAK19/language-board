@@ -55,7 +55,7 @@ export const useDatasetTransfer = (
   };
 
   const importData = () => {
-    if (state.status !== 'ready' || !confirmed) return;
+    if (state.status !== 'ready' || !confirmed) return false;
 
     dispatch({ type: 'replaceDataset', data: state.data });
 
@@ -64,6 +64,7 @@ export const useDatasetTransfer = (
 
     setConfirmed(false);
     setState({ status: 'imported' });
+    return true;
   };
 
   const exportData = () => {

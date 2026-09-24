@@ -21,7 +21,7 @@
 
   label {
     display: block;
-    margin: var(--space-2) 0 var(--space-1);
+    margin: var(--space-2) 0 var(--space-2);
     font-size: 14px;
     font-weight: 550;
   }
@@ -41,6 +41,7 @@
     }
 
     &:focus-visible {
+      outline-offset: -3px;
       border-color: var(--focus);
       background: var(--surface);
     }

@@ -45,7 +45,9 @@ export const DatasetTransferDialog = ({ onClose }: { onClose: () => void }) => {
         </Button>
         <Button
           disabled={state.status !== 'ready' || !transfer.confirmed}
-          onClick={transfer.importData}
+          onClick={() => {
+            if (transfer.importData()) onClose();
+          }}
         >
           Replace & import
         </Button>

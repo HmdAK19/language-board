@@ -4,7 +4,7 @@
   display: block;
   font-size: 14px;
   font-weight: 550;
-  margin: var(--space-2) 0 var(--space-1);
+  margin: var(--space-2) 0 var(--space-2);
 }
 
 .keywordForm input {
@@ -13,6 +13,10 @@
   max-width: 100%;
   min-height: 44px;
   padding-block: var(--space-2);
+
+  &:focus-visible {
+    outline-offset: -3px;
+  }
 }
 
 .keywordForm {
@@ -27,6 +31,7 @@
 
   h3 {
     margin: 0;
+    color: var(--blue);
     font-size: 13px;
   }
 
@@ -43,12 +48,16 @@
   overflow-x: hidden;
   margin-top: var(--modal-spacing);
   border: 0;
-  border-top: 1px solid var(--divider);
   margin-inline: 0;
   padding: 0 8px;
 
   > legend {
-    margin: var(--space-2) 0;
+    display: block;
+    width: 100%;
+    margin: 0 0 var(--space-2);
+    padding: var(--space-2) 0 0;
+    border-top: 1px solid var(--divider);
+    color: var(--blue);
     font-size: 14px;
     font-weight: bold;
   }
