@@ -13,6 +13,7 @@ $breakpoints: (
   @if not map.has-key($breakpoints, $name) {
     @error 'Unknown breakpoint: #{$name}';
   }
+
   @return map.get($breakpoints, $name);
 }
 
@@ -21,6 +22,7 @@ $breakpoints: (
     @content;
   }
 }
+
 @mixin down($name) {
   @media (max-width: breakpoint($name)) {
     @content;

@@ -12,6 +12,7 @@
     margin: 0 0 var(--space-2);
     font-size: 16px;
   }
+
   p {
     margin: 0;
     color: var(--empty-text);
@@ -39,6 +40,7 @@
   color: var(--empty-text);
   font-size: 13px;
 }
+
 .fileArea {
   margin-top: var(--space-4);
   padding: var(--space-4);
@@ -46,12 +48,14 @@
   border: 1px dashed var(--form-border);
   border-radius: var(--radius-control);
 }
+
 .fileArea label {
   display: block;
   margin-bottom: var(--space-3);
   font-size: 14px;
   font-weight: 600;
 }
+
 .fileArea input {
   display: block;
   width: 100%;
@@ -59,6 +63,7 @@
   font: inherit;
   font-size: 12px;
 }
+
 .fileArea input::file-selector-button {
   padding: 10px;
   margin-inline-end: var(--space-2);
@@ -68,27 +73,32 @@
   color: var(--text);
   cursor: pointer;
 }
+
 .fileArea p {
   font-size: 12px;
   color: var(--empty-text);
   margin-bottom: 0;
 }
+
 .preview {
   margin-top: var(--space-4);
   overflow-wrap: anywhere;
 }
+
 .preview p,
 .feedback {
   font-size: 13px;
   line-height: 1.7;
   overflow-wrap: anywhere;
 }
+
 .warning {
   padding: var(--space-3);
   background: var(--warning-surface);
   border: 1px solid var(--warning-border);
   border-radius: var(--radius-control);
 }
+
 .confirm {
   display: flex;
   align-items: flex-start;
@@ -98,12 +108,14 @@
   padding-block: var(--space-2);
   cursor: pointer;
 }
+
 .confirm input {
   flex: 0 0 18px;
   width: 18px;
   height: 18px;
   accent-color: var(--blue);
 }
+
 .actions {
   display: flex;
   justify-content: flex-end;
@@ -111,14 +123,17 @@
   gap: var(--space-3);
   padding-top: var(--space-5);
 }
+
 .section input:focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 3px;
 }
+
 @media (max-width: 480px) {
   .actions {
     flex-direction: column-reverse;
   }
+
   .section > button {
     width: 100%;
   }

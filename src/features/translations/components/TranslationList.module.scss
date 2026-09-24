@@ -1,27 +1,33 @@
 @use '../../../shared/styles/abstracts' as media;
+
 .container {
   --columns: 1;
   --row-gap: var(--space-4);
 }
+
 .list,
 .grid {
   margin: 0;
   padding: 0;
   list-style: none;
 }
+
 .grid {
   display: grid;
   grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
   gap: var(--row-gap);
 }
+
 .row {
   padding-bottom: var(--row-gap);
 }
+
 @include media.up(cards) {
   .container {
     --columns: 2;
   }
 }
+
 @include media.up(desktop) {
   .container {
     --columns: 3;
