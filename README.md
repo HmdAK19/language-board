@@ -38,7 +38,7 @@ npm run dev
 - شروع با ۸ واژه و زبان‌های فارسی، عربی و فرانسوی؛ ترجمهٔ فارسی Key و Food عمداً خالی است.
 - ویرایش درجا و ذخیرهٔ خودکار ترجمه‌ها، واژه‌ها و ترتیب آن‌ها در `localStorage`.
 - افزودن واژه با فیلد جداگانه برای تمام زبان‌ها؛ حداقل یک ترجمه لازم است.
-- جابه‌جایی واژه‌ها با drag-and-drop و صفحه‌کلید، با ترتیب مشترک در همهٔ زبان‌ها.
+- جابه‌جایی واژه‌ها با drag-and-drop در ماوس و صفحهٔ لمسی و نیز با صفحه‌کلید، با ترتیب مشترک در همهٔ زبان‌ها.
 - افزودن زبان با کد استاندارد، نام نمایشی و جهت متن؛ جابه‌جایی و حذف زبان همراه ترجمه‌هایش.
 - صفحهٔ عمومی فقط‌خواندنی با نمایش `No translation yet` برای ترجمهٔ خالی.
 - دیالوگ بومی، بازگرداندن فوکوس، خطاهای فرم و پشتیبانی از reduced motion.
@@ -66,23 +66,23 @@ npm run dev
 
 ## دستورات پروژه
 
-| دستور                                           | کاربرد                                     |
-| ----------------------------------------------- | ------------------------------------------ |
-| `npm run dev`                                   | سرور توسعه روی loopback                    |
-| `npm run build`                                 | بررسی TypeScript و خروجی Vite در dist      |
-| `npm run preview`                               | مشاهدهٔ خروجی build، معمولاً روی پورت 4173 |
-| `npm run lint`                                  | ESLint                                     |
-| `npm test`                                      | آزمون‌های واحد دامنه و مخزن                |
-| `npm run test:e2e`                              | مجموعهٔ آزمون‌های Playwright               |
-| `npm run test:e2e -- e2e/documentation.spec.ts` | تولید مجدد تصاویر مستندات                  |
-| `npm run format:check`                          | بررسی قالب‌بندی                            |
-| `npm run format`                                | قالب‌بندی فایل‌های پروژه                   |
+| دستور                           | کاربرد                                     |
+| ------------------------------- | ------------------------------------------ |
+| `npm run dev`                   | سرور توسعه روی loopback                    |
+| `npm run build`                 | بررسی TypeScript و خروجی Vite در dist      |
+| `npm run preview`               | مشاهدهٔ خروجی build، معمولاً روی پورت 4173 |
+| `npm run lint`                  | ESLint                                     |
+| `npm test`                      | آزمون‌های واحد دامنه و مخزن                |
+| `npm run test:e2e`              | مجموعهٔ آزمون‌های Playwright               |
+| `npm run test:docs:screenshots` | تولید مجدد تصاویر مستندات                  |
+| `npm run format:check`          | بررسی قالب‌بندی                            |
+| `npm run format`                | قالب‌بندی فایل‌های پروژه                   |
 
 برای Playwright ابتدا `npx playwright install chromium` را اجرا کنید. در Windows می‌توان از Edge نصب‌شده استفاده کرد:
 
 ```powershell
 $env:PLAYWRIGHT_CHANNEL = 'msedge'
-npm run test:e2e -- e2e/documentation.spec.ts
+npm run test:docs:screenshots
 ```
 
 ## فناوری و محدوده

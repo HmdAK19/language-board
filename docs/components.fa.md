@@ -27,20 +27,15 @@ TextField درخواست autoFocus را با data-autofocus نیز مشخص می
 
 ## اجزای feature
 
-| جزء                   | قرارداد و اتصال                                                                                  |
-| --------------------- | ------------------------------------------------------------------------------------------------ |
-| KeywordList           | دریافت داده و dispatch از Context، اتصال DragDropContext و ردیف‌ها                               |
-| KeywordRow            | props شامل item/index/language/onEdit؛ برای جهت زبان Context نیز می‌خواند و Draggable را می‌سازد |
-| TranslationList       | تبدیل order به کارت‌ها و نمایش حالت خالی                                                         |
-| TranslationCard       | props شامل keyword/value/language؛ برای جهت متن Context می‌خواند                                 |
-| LanguageSelect        | خواندن کاتالوگ و زبان فعال و تغییر آن در Context                                                 |
-| ManagementOverview    | دریافت dataset و محاسبهٔ آمار بر مبنای زبان اول                                                  |
-| ManagementActions     | callback بازکردن دو دیالوگ                                                                       |
-| AddKeywordDialog      | اتصال فرم به state و action افزودن واژه                                                          |
-| KeywordForm           | دریافت languages/data/validateKeyword/onSubmit/onCancel؛ مدیریت فرم مستقل از repository          |
-| ManageLanguagesDialog | افزودن، حذف با confirm، مرتب‌سازی و اصلاح انتخاب فعال                                            |
-| LanguageCatalog       | نمایش فهرست و callbackهای onMove/onRemove                                                        |
-| AddLanguageForm       | دریافت data/onAdd/onCancel و اعتبارسنجی زبان                                                     |
+| گروه / جزء       | قرارداد و اتصال                                                                                        |
+| ---------------- | ------------------------------------------------------------------------------------------------------ |
+| keywords         | `KeywordList` و `KeywordRow` برای فهرست مجازی، ویرایش و drag-and-drop؛ فرم و دیالوگ افزودن/ویرایش واژه |
+| translations     | `TranslationList` برای تبدیل order به کارت‌ها و `TranslationCard` برای متن جهت‌دار و حالت خالی         |
+| languages        | انتخاب زبان فعال، فهرست قابل مرتب‌سازی و فرم/دیالوگ افزودن و حذف زبان                                  |
+| management       | `ManagementOverview` برای آمار و `ManagementActions` برای بازکردن دیالوگ‌های صفحه                      |
+| dataset-transfer | دیالوگ ورود/خروج، خلاصهٔ فایل، اعتبارسنجی و تأیید جایگزینی کامل dataset                                |
+| KeywordFilters   | جست‌وجو و فیلتر وضعیت ترجمه بدون تغییر ترتیب اصلی                                                      |
+| ActionIcon       | دکمهٔ آیکنی مشترک feature با نام قابل دسترس و حالت‌های ویرایش/حذف/جابه‌جایی                            |
 
 ردیف و کارت در نسخهٔ فعلی کاملاً presentational نیستند؛ وابستگی آن‌ها به Context برای metadata زبان باید هنگام استفادهٔ مجدد یا آزمون در نظر گرفته شود.
 
@@ -48,6 +43,10 @@ TextField درخواست autoFocus را با data-autofocus نیز مشخص می
 
 React Hook Form با yupResolver به schemaهای `schemas/` متصل است. نوع مقادیر با InferType استخراج می‌شود. فرم واژه برای هر زبان یک input دارد و شرط حداقل یک ترجمه در سطح object بررسی می‌شود. schema فرم زبان از اعتبارسنجی دامنه و dataset برای تشخیص کد تکراری استفاده می‌کند. persistence در فرم‌ها نیست؛ callback دیالوگ dispatch می‌کند.
 
+## انتقال داده
+
+`DatasetTransferDialog` خروجی نسخهٔ ۲ را از کل dataset می‌سازد و فایل ورودی را پیش از dispatch در مرز سرویس اعتبارسنجی می‌کند. import فقط پس از انتخاب فایل معتبر و تأیید صریح جایگزینی فعال می‌شود و پس از موفقیت دیالوگ بسته می‌شود. اجزای بخش خروجی، ورودی، خلاصه و عنوان در پوشهٔ `dataset-transfer/` جدا شده‌اند تا منطق دیالوگ یکپارچه ولی فایل‌ها کوچک بمانند.
+
 ## قواعد توسعه
 
-shared نباید feature یا storage وارد کند. عملیات state در domain بماند، schema پیام فرم و قالب دادهٔ ورودی را کنترل کند و service مرز persistence باشد. استایل اختصاصی هر جزء در فایل .module.scss کنارش وارد می‌شود. memo و تقسیم Context باید با اندازه‌گیری نیاز واقعی همراه باشد.
+shared نباید feature یا storage وارد کند. عملیات state در domain بماند، schema پیام فرم و قالب دادهٔ ورودی را کنترل کند و service مرز persistence باشد. استایل اختصاصی هر جزء در فایل .module.scss کنارش وارد می‌شود. اجزای feature بر اساس حوزه در زیرپوشه‌های `keywords`، `languages`، `translations`، `management` و `dataset-transfer` قرار می‌گیرند؛ اجزای واقعاً مشترک feature در ریشه می‌مانند. سطح عمومی importها در `components/index.ts` نگهداری می‌شود. memo و تقسیم Context باید با اندازه‌گیری نیاز واقعی همراه باشد.

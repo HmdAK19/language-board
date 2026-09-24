@@ -12,7 +12,13 @@ src/
     routes/       مسیرها، routeConfig، RouteLayout و lazy loading
     styles/       استایل سراسری و پوسته
   features/translations/
-    components/   لیست، ردیف، کارت، فرم و دیالوگ‌ها
+    components/
+      dataset-transfer/   ورود و خروج JSON
+      keywords/           فهرست، ردیف و فرم واژه
+      languages/          انتخاب و مدیریت زبان‌ها
+      management/         آمار و عملیات صفحهٔ مدیریت
+      translations/       فهرست و کارت ترجمه
+      *.tsx               کنترل‌های مشترک داخل feature
     domain/       reducerها، factory، seed، validation و migration
     hooks/        دسترسی کنترل‌شده به Context
     pages/        ManagementPage و PublicPage

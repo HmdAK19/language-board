@@ -35,6 +35,9 @@ export const TranslationProvider = ({
   }, [data.languages, language]);
 
   useEffect(() => {
+    const saveWarning =
+      'Changes are available in this session, but could not be saved. Check your browser storage settings before closing this page.';
+
     try {
       repository.save(data);
       setSaved(true);
@@ -42,8 +45,7 @@ export const TranslationProvider = ({
     } catch {
       setSaved(false);
       setWarning(
-        initial.warning ||
-          'Changes are available in this session, but could not be saved. Check your browser storage settings before closing this page.',
+        initial.warning ? `${initial.warning} ${saveWarning}` : saveWarning,
       );
     }
   }, [data, repository, initial.warning]);
