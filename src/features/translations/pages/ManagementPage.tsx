@@ -17,6 +17,10 @@ const ManagementPage = () => {
   const { data } = useTranslations();
   const [adding, setAdding] = useState(false);
   const [managingLanguages, setManagingLanguages] = useState(false);
+  const [editingKeywordId, setEditingKeywordId] = useState<string | null>(null);
+  const editingKeyword = editingKeywordId
+    ? data.keywords.byId[editingKeywordId]
+    : undefined;
 
   return (
     <section className={styles.managementPage} aria-labelledby="page-title">
@@ -29,7 +33,7 @@ const ManagementPage = () => {
       />
       <ManagementOverview data={data} />
       <div className={styles.managementCard}>
-        <KeywordList />
+        <KeywordList onEditTranslations={setEditingKeywordId} />
       </div>
       <ManagementActions
         onAddKeyword={() => setAdding(true)}
@@ -40,6 +44,12 @@ const ManagementPage = () => {
 
       {managingLanguages && (
         <ManageLanguagesDialog onClose={() => setManagingLanguages(false)} />
+      )}
+      {editingKeyword && (
+        <AddKeywordDialog
+          keyword={editingKeyword}
+          onClose={() => setEditingKeywordId(null)}
+        />
       )}
     </section>
   );

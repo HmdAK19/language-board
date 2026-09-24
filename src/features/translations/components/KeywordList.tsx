@@ -6,7 +6,11 @@ import { VirtualList } from '@/shared';
 import { KeywordRow, KeywordRowContent } from './KeywordRow';
 import styles from './KeywordList.module.scss';
 
-export const KeywordList = () => {
+export const KeywordList = ({
+  onEditTranslations,
+}: {
+  onEditTranslations: (id: string) => void;
+}) => {
   const { data, language, dispatch } = useTranslations();
   const direction = data.languages.find(
     (item) => item.code === language,
@@ -37,6 +41,7 @@ export const KeywordList = () => {
             provided={provided}
             snapshot={snapshot}
             onEdit={() => {}}
+            onEditTranslations={() => {}}
           />
         )}
       >
@@ -60,6 +65,7 @@ export const KeywordList = () => {
                 onEdit={(value) =>
                   dispatch({ type: 'edit', id, language, value })
                 }
+                onEditTranslations={() => onEditTranslations(id)}
               />
             )}
           />

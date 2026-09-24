@@ -14,6 +14,8 @@ interface KeywordFormProps {
   validateKeyword: (keyword: string) => string | null;
   onSubmit: (values: KeywordFormValues) => void;
   onCancel: () => void;
+  initialValues?: KeywordFormValues;
+  submitLabel?: string;
 }
 
 export const KeywordForm = ({
@@ -22,6 +24,8 @@ export const KeywordForm = ({
   validateKeyword,
   onSubmit,
   onCancel,
+  initialValues,
+  submitLabel = 'Add keyword',
 }: KeywordFormProps) => {
   const {
     register,
@@ -30,7 +34,7 @@ export const KeywordForm = ({
   } = useForm<KeywordFormValues>({
     shouldUnregister: false,
     resolver: yupResolver(createKeywordFormSchema(validateKeyword, data)),
-    defaultValues: {
+    defaultValues: initialValues ?? {
       keyword: '',
       translations: Object.fromEntries(languages.map(({ code }) => [code, ''])),
     },
@@ -89,7 +93,7 @@ export const KeywordForm = ({
           Cancel
         </Button>
         <Button type="submit" disabled={isSubmitting}>
-          Add keyword
+          {submitLabel}
         </Button>
       </div>
     </form>
