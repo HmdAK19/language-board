@@ -38,7 +38,6 @@ const PageMotion = ({
         opacity: { duration: 0.3 },
       }}
     >
-      <span className={styles.pageAccent} aria-hidden="true" />
       {children}
     </m.div>
   </AnimatePresence>

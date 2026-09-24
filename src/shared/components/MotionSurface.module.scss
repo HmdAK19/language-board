@@ -11,20 +11,6 @@
   flex-direction: column;
 }
 
-.pageAccent {
-  position: absolute;
-  z-index: 2;
-  top: 0;
-  left: 50%;
-  width: min(180px, 34vw);
-  height: 3px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, transparent, var(--blue), transparent);
-  opacity: 0.75;
-  transform: translateX(-50%);
-  pointer-events: none;
-}
-
 .content {
   isolation: isolate;
 }
