@@ -3,11 +3,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import { Button, TextField, VirtualList } from '@/shared';
 
-import { createKeywordFormSchema, type KeywordFormValues } from '../schemas';
-import type { Dataset, LanguageDefinition } from '../types';
+import { createKeywordFormSchema, type KeywordFormValues } from '../../schemas';
+import type { Dataset, LanguageDefinition } from '../../types';
 import styles from './KeywordForm.module.scss';
 
-export type { KeywordFormValues } from '../schemas';
+export type { KeywordFormValues } from '../../schemas';
 
 interface KeywordFormProps {
   languages: LanguageDefinition[];

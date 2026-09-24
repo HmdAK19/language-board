@@ -42,7 +42,8 @@ export const TranslationProvider = ({
     } catch {
       setSaved(false);
       setWarning(
-        'Changes are available in this session, but could not be saved. Check your browser storage settings before closing this page.',
+        initial.warning ||
+          'Changes are available in this session, but could not be saved. Check your browser storage settings before closing this page.',
       );
     }
   }, [data, repository, initial.warning]);

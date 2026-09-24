@@ -1,5 +1,8 @@
-import { AddKeywordDialog, ManageLanguagesDialog } from '../components';
-import { DatasetTransferDialog } from '../components/DatasetTransferDialog';
+import {
+  AddKeywordDialog,
+  DatasetTransferDialog,
+  ManageLanguagesDialog,
+} from '../components';
 import type { ManagementDialog } from '../hooks';
 import type { Dataset } from '../types';
 

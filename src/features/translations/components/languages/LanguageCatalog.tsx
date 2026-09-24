@@ -1,7 +1,7 @@
 import { Button, VirtualList } from '@/shared';
 
-import type { LanguageDefinition } from '../types';
-import { ActionIcon } from './ActionIcon';
+import type { LanguageDefinition } from '../../types';
+import { ActionIcon } from '../ActionIcon';
 import styles from './LanguageCatalog.module.scss';
 
 interface LanguageCatalogProps {

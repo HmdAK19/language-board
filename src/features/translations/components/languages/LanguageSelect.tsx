@@ -1,4 +1,4 @@
-import { useTranslations } from '../hooks';
+import { useTranslations } from '../../hooks';
 import styles from './LanguageSelect.module.scss';
 
 export const LanguageSelect = () => {

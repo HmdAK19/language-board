@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 type ActionIconName = 'arrow-down' | 'arrow-up' | 'grip' | 'pencil' | 'trash';
 
 const paths: Record<ActionIconName, ReactNode> = {
@@ -53,4 +55,3 @@ export const ActionIcon = ({ name }: { name: ActionIconName }) => (
     {paths[name]}
   </svg>
 );
-import type { ReactNode } from 'react';

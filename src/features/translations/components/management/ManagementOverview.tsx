@@ -1,4 +1,4 @@
-import type { Dataset } from '../types';
+import type { Dataset } from '../../types';
 import styles from './ManagementOverview.module.scss';
 
 interface ManagementOverviewProps {

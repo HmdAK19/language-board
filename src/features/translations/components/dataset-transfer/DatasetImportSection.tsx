@@ -1,7 +1,7 @@
 import type { ChangeEvent, MouseEvent } from 'react';
 
-import type { ImportState } from '../hooks/useDatasetTransfer';
-import type { Dataset } from '../types';
+import type { ImportState } from '../../hooks/useDatasetTransfer';
+import type { Dataset } from '../../types';
 import { DatasetTransferSectionHeader } from './DatasetTransferSectionHeader';
 import { DatasetTransferSummary } from './DatasetTransferSummary';
 import styles from './DatasetTransferDialog.module.scss';

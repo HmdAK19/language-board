@@ -1,4 +1,4 @@
-@use '../../../shared/styles/abstracts' as ui;
+@use '../../../../shared/styles/abstracts' as ui;
 
 .section {
   @include ui.panel(10px, 12px);

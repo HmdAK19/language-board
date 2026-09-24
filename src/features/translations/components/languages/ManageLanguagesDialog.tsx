@@ -1,10 +1,10 @@
 import { Button, Modal } from '@/shared';
 
-import { normalizeLanguageCode } from '../domain';
-import { useTranslations } from '../hooks';
-import type { LanguageDefinition } from '../types';
+import { normalizeLanguageCode } from '../../domain';
+import { useTranslations } from '../../hooks';
+import type { LanguageDefinition } from '../../types';
 import { AddLanguageForm } from './AddLanguageForm';
-import { ActionIcon } from './ActionIcon';
+import { ActionIcon } from '../ActionIcon';
 import { LanguageCatalog } from './LanguageCatalog';
 import styles from './ManageLanguagesDialog.module.scss';
 

@@ -7,12 +7,12 @@ import {
 } from '@hello-pangea/dnd';
 import { useState } from 'react';
 
-import { useTranslations } from '../hooks';
+import { useTranslations } from '../../hooks';
 import { VirtualList } from '@/shared';
 import { KeywordRow, KeywordRowContent } from './KeywordRow';
-import { useKeywordFilters } from '../hooks/useKeywordFilters';
-import { KeywordFilters } from './KeywordFilters';
-import { useImmediateTouchSensor } from '../hooks/useImmediateTouchSensor';
+import { useKeywordFilters } from '../../hooks/useKeywordFilters';
+import { useImmediateTouchSensor } from '../../hooks/useImmediateTouchSensor';
+import { KeywordFilters } from '../KeywordFilters';
 import styles from './KeywordList.module.scss';
 
 const dragSensors: Sensor[] = [

@@ -2,11 +2,11 @@ import { useMemo, useRef } from 'react';
 
 import { VirtualList } from '@/shared';
 
-import { useTranslationColumns } from '../hooks/useTranslationColumns';
-import { useTranslations } from '../hooks';
+import { useTranslationColumns } from '../../hooks/useTranslationColumns';
+import { useTranslations } from '../../hooks';
 import { TranslationCard } from './TranslationCard';
-import { useKeywordFilters } from '../hooks/useKeywordFilters';
-import { KeywordFilters } from './KeywordFilters';
+import { useKeywordFilters } from '../../hooks/useKeywordFilters';
+import { KeywordFilters } from '../KeywordFilters';
 import styles from './TranslationList.module.scss';
 
 export const TranslationList = () => {

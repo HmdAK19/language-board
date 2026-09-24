@@ -4,8 +4,12 @@ import {
   type DraggableStateSnapshot,
 } from '@hello-pangea/dnd';
 
-import { type Keyword, type Language, type LanguageDefinition } from '../types';
-import { ActionIcon } from './ActionIcon';
+import {
+  type Keyword,
+  type Language,
+  type LanguageDefinition,
+} from '../../types';
+import { ActionIcon } from '../ActionIcon';
 import styles from './KeywordRow.module.scss';
 
 interface KeywordRowProps {

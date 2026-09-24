@@ -1,7 +1,8 @@
-export { AddKeywordDialog } from './AddKeywordDialog';
-export { KeywordList } from './KeywordList';
-export { LanguageSelect } from './LanguageSelect';
-export { ManageLanguagesDialog } from './ManageLanguagesDialog';
-export { ManagementActions } from './ManagementActions';
-export { ManagementOverview } from './ManagementOverview';
-export { TranslationList } from './TranslationList';
+export { DatasetTransferDialog } from './dataset-transfer/DatasetTransferDialog';
+export { AddKeywordDialog } from './keywords/AddKeywordDialog';
+export { KeywordList } from './keywords/KeywordList';
+export { LanguageSelect } from './languages/LanguageSelect';
+export { ManageLanguagesDialog } from './languages/ManageLanguagesDialog';
+export { ManagementActions } from './management/ManagementActions';
+export { ManagementOverview } from './management/ManagementOverview';
+export { TranslationList } from './translations/TranslationList';

@@ -1,6 +1,6 @@
 import { Button } from '@/shared';
 
-import type { Dataset } from '../types';
+import type { Dataset } from '../../types';
 import { DatasetTransferSectionHeader } from './DatasetTransferSectionHeader';
 import { DatasetTransferSummary } from './DatasetTransferSummary';
 import styles from './DatasetTransferDialog.module.scss';

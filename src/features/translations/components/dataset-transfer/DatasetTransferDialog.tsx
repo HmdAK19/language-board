@@ -2,7 +2,7 @@ import { useId } from 'react';
 
 import { Button, Modal } from '@/shared';
 
-import { useDatasetTransfer } from '../hooks/useDatasetTransfer';
+import { useDatasetTransfer } from '../../hooks/useDatasetTransfer';
 import { DatasetExportSection } from './DatasetExportSection';
 import { DatasetImportSection } from './DatasetImportSection';
 import styles from './DatasetTransferDialog.module.scss';

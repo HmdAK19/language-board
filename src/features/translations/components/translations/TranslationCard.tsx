@@ -1,5 +1,5 @@
-import { useTranslations } from '../hooks';
-import { type Language } from '../types';
+import { useTranslations } from '../../hooks';
+import { type Language } from '../../types';
 import styles from './TranslationCard.module.scss';
 
 interface TranslationCardProps {

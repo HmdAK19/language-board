@@ -1,9 +1,9 @@
 import { Modal } from '@/shared';
 
-import { getKeywordValidationError } from '../domain';
-import { useTranslations } from '../hooks';
+import { getKeywordValidationError } from '../../domain';
+import { useTranslations } from '../../hooks';
 import { KeywordForm, type KeywordFormValues } from './KeywordForm';
-import type { Keyword } from '../types';
+import type { Keyword } from '../../types';
 
 export const AddKeywordDialog = ({
   onClose,
