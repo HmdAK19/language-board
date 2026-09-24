@@ -1,4 +1,10 @@
-import { DragDropContext, Droppable } from '@hello-pangea/dnd';
+import {
+  DragDropContext,
+  Droppable,
+  useKeyboardSensor,
+  useMouseSensor,
+  type Sensor,
+} from '@hello-pangea/dnd';
 import { useState } from 'react';
 
 import { useTranslations } from '../hooks';
@@ -6,7 +12,14 @@ import { VirtualList } from '@/shared';
 import { KeywordRow, KeywordRowContent } from './KeywordRow';
 import { useKeywordFilters } from '../hooks/useKeywordFilters';
 import { KeywordFilters } from './KeywordFilters';
+import { useImmediateTouchSensor } from '../hooks/useImmediateTouchSensor';
 import styles from './KeywordList.module.scss';
+
+const dragSensors: Sensor[] = [
+  useMouseSensor,
+  useKeyboardSensor,
+  useImmediateTouchSensor,
+];
 
 export const KeywordList = ({
   onEditTranslations,
@@ -26,6 +39,8 @@ export const KeywordList = ({
     <>
       <KeywordFilters filters={filters} management />
       <DragDropContext
+        enableDefaultSensors={false}
+        sensors={dragSensors}
         onBeforeCapture={({ draggableId }) => setDraggedId(draggableId)}
         onDragEnd={({ source, destination }) => {
           setDraggedId(null);
