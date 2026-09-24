@@ -34,15 +34,15 @@ export const AppNavigation = () => {
       <div className="nav-links">
         {isPublic ? (
           <>
-            <NavLink className="public-library-link" to={routePaths.public} end>
-              Translations
-            </NavLink>
             <NavLink
               className="public-management-link"
               to={routePaths.management}
             >
               Management Page <span aria-hidden="true">↗</span>
             </NavLink>
+            <div className="public-nav-context">
+              <span>Translations</span>
+            </div>
           </>
         ) : (
           <NavLink to={routePaths.public}>

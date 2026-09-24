@@ -59,6 +59,21 @@
     outline-color: var(--nav-focus);
   }
 }
+
+.public-nav-context {
+  padding: var(--space-3);
+  border-radius: var(--radius-panel);
+  background: var(--nav-link-surface);
+  color: var(--nav-link-text);
+
+  > span {
+    color: var(--nav-link-text);
+    font-size: 14px;
+    letter-spacing: 1.4px;
+    font-weight: 750;
+  }
+}
+
 .admin-nav-context {
   display: grid;
   gap: 5px;
