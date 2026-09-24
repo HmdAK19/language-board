@@ -1,0 +1,105 @@
+.toolbar {
+  margin-bottom: var(--space-4);
+  padding: var(--space-3);
+  border-bottom: var(--border-subtle);
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: var(--space-3);
+}
+
+.search {
+  flex: 1 1 220px;
+  min-width: 0;
+}
+
+.search label,
+.status legend {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.search input {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid var(--form-border);
+  border-radius: var(--radius-control);
+  background: var(--input-surface);
+  color: var(--text);
+  font: inherit;
+}
+
+.status {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.status div {
+  display: flex;
+  gap: 4px;
+}
+
+.toolbar button {
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-control);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.toolbar button[aria-pressed='true'] {
+  color: var(--blue);
+  border-color: var(--blue);
+  background: var(--nav-link-surface);
+}
+
+.toolbar button:hover:not(:disabled) {
+  border-color: var(--blue);
+}
+
+.toolbar button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.toolbar :is(input, button):focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.summary {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  font-size: 12px;
+  color: var(--empty-text);
+}
+
+@media (max-width: 400px) {
+  .toolbar {
+    padding-inline: 0;
+  }
+
+  .controls {
+    gap: var(--space-2);
+  }
+
+  .toolbar button {
+    padding-inline: 9px;
+  }
+}

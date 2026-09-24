@@ -10,6 +10,7 @@ import styles from './KeywordRow.module.scss';
 interface KeywordRowProps {
   item: Keyword;
   index: number;
+  isDragDisabled?: boolean;
   language: Language;
   direction: LanguageDefinition['direction'] | undefined;
   onEdit: (value: string) => void;
@@ -26,6 +27,7 @@ export const KeywordRowContent = ({
   onDelete,
   provided,
   snapshot,
+  isDragDisabled,
 }: Omit<KeywordRowProps, 'index'> & {
   provided: DraggableProvided;
   snapshot: DraggableStateSnapshot;
@@ -44,6 +46,7 @@ export const KeywordRowContent = ({
         className={styles.dragHandle}
         {...provided.dragHandleProps}
         aria-label={`Reorder ${item.keyword}`}
+        disabled={isDragDisabled}
         title="Drag to reorder, or press Space and use arrow keys"
       >
         ⠿
@@ -87,6 +90,7 @@ export const KeywordRow = (props: KeywordRowProps) => (
   <Draggable
     draggableId={props.item.id}
     index={props.index}
+    isDragDisabled={props.isDragDisabled}
     disableInteractiveElementBlocking
   >
     {(provided, snapshot) => (

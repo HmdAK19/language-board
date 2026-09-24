@@ -26,6 +26,7 @@
 
   .managementCard {
     display: flex;
+    flex-direction: column;
     min-height: 0;
     grid-column: 1 / -1;
     padding: var(--space-3) 28px var(--space-5) var(--space-4);

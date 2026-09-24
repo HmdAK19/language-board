@@ -24,7 +24,7 @@ const normalizeTranslations = (
 
   const translations = Object.fromEntries(
     entries
-      .map(([code, value]) => [code, value.trim()] as const)
+      .map(([code, value]) => [code, (value ?? '').trim()] as const)
       .filter(([, value]) => value),
   );
   return Object.keys(translations).length ? translations : null;
